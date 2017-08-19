@@ -202,6 +202,8 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 }
 ```
 
+**安全提示：** 该API可以被用于密码暴力破解，应受到速率限制。限制应针对用户，而不是客户端IP。
+
 ### 刷新
 `POST /authserver/refresh`
 
@@ -219,11 +221,11 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 }
 ```
 
-当指定`clientToken`时，服务端应检查`accessToken`和`clientToken`是否正确，否则只需要检查`accessToken`。
+当指定`clientToken`时，服务端应检查`accessToken`和`clientToken`是否有效，否则只需要检查`accessToken`。
 
 颁发的新令牌的`clientToken`应与原令牌的相同。`selectedProfile`只有在原令牌绑定的角色为空时才能包含，新令牌应绑定到该项目指定的角色上。
 
-若请求失败，原令牌依然有效。
+该操作在令牌暂时失效时依然可以执行。若请求失败，原令牌依然有效。
 
 返回格式：
 ```javascript
@@ -238,6 +240,57 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 	}
 }
 ```
+
+### 验证令牌
+`POST /authserver/validate`
+
+检验令牌是否有效。
+
+请求格式：
+```javascript
+{
+	"accessToken":"令牌的accessToken",
+	"clientToken":"令牌的clientToken（可选）"
+}
+```
+
+当指定`clientToken`时，服务端应检查`accessToken`和`clientToken`是否有效，否则只需要检查`accessToken`。
+
+若令牌有效，应返回HTTP状态码`204 No Content`，否则作为令牌无效的异常情况处理。
+
+### 吊销令牌
+`POST /authserver/invalidate`
+
+吊销给定令牌。
+
+请求格式：
+```javascript
+{
+	"accessToken":"令牌的accessToken",
+	"clientToken":"令牌的clientToken（可选）"
+}
+```
+
+服务端只需要检查`accessToken`，即无论`clientToken`为何值都不会造成影响。
+
+无论操作是否成功，服务端应返回HTTP状态码`204 No Content`。
+
+### 登出
+`POST /authserver/signout`
+
+吊销用户的所有令牌。
+
+请求格式：
+```javascript
+{
+	"username":"邮箱",
+	"password":"密码"
+}
+```
+
+若操作成功，则服务端应返回HTTP状态码`204 No Content`。
+
+**安全提示：** 该API也可用于判断密码的正确性，因此应受到和登录API一样的速率限制。
 
 # 参见
  * [Authentication - wiki.vg](http://wiki.vg/Authentication)
