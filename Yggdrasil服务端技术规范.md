@@ -4,7 +4,7 @@
 # 基本约定
 
 ## 请求与响应格式
-若无特殊说明，请求与响应均为json格式（如果有body），`Content-Type`均为`application/json; charset=utf-8`。
+若无特殊说明，请求与响应均为JSON格式（如果有body），`Content-Type`均为`application/json; charset=utf-8`。
 
 所有API都应该使用https协议。
 
@@ -16,6 +16,23 @@
 	"cause":"该错误的原因（可选）"
 }
 ```
+
+当遇到本文中已说明的异常情况时，返回的错误信息应符合对应的要求。
+
+下表列举了常见异常情况下的错误信息。
+
+**非标准**指由于无法使Mojang的Yggdrasil服务器触发对应异常，而只能推测该种情况下的错误信息。
+
+**未定义中**指该项并没有明确要求。
+
+|异常情况|HTTP状态码|Error|Cause|Error Message|备注|
+|--------|----------|-----|-----|------------|----|
+|一般HTTP异常（非业务异常）|_未定义_|_该HTTP状态对应的Reason Phrase（于[HTTP/1.1](https://tools.ietf.org/html/rfc2616#section-6.1.1)中定义）_|_无_|_未定义_|`404 Not Found`、`405 Method Not Allowed`等属于该情况|
+|令牌无效|403|ForbiddenOperationException|_无_|Invalid token.|
+|密码错误，或短时间内多次登录失败而被暂时禁止登录|403|ForbiddenOperationException|_无_|Invalid credentials. Invalid username or password.|
+|试图向一个已经绑定了角色的令牌指定其要绑定的角色|400|IllegalArgumentException|_无_|Access token already has a profile assigned.|
+|试图向一个令牌绑定不属于其对应用户的角色 _（非标准）_|403|ForbiddenOperationException|_无_|_未定义_|
+
 
 ## 数据格式
 我们约定以下数据格式
@@ -30,6 +47,28 @@
  * 密码
 
 其中ID为一个无符号UUID。邮箱可以变更，但需要保证唯一。
+
+#### 用户信息的序列化
+用户信息序列化后符合以下格式：
+```javascript
+{
+	"id":"用户的ID",
+	"properties":[ // 用户的属性（数组，每一元素为一个属性）
+		{ // 一项属性
+			"name":"属性的键",
+			"value":"属性的值",
+		}
+		// ,...（可以有更多）
+	]
+}
+```
+
+用户属性中目前已知的键如下（并不一定会包含）：
+
+|键|对应的值|
+|--|--------|
+|preferredLanguage|用户的偏好语言，[Java Locale格式](https://docs.oracle.com/javase/8/docs/api/java/util/Locale.html#toString--)(?)，例如`en`、`zh_CN`|
+|twitch_access_token|[Twitch账户Token](https://dev.twitch.tv/docs/v5/guides/using-the-twitch-api/)，仅当绑定Twitch账户时才存在|
 
 ### 角色（Profile）
 > Mojang当前不支持多角色，不保证多角色部分内容的正确性。
@@ -64,7 +103,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 {
 	"id":"角色UUID（无符号）",
 	"name":"角色名称",
-	"properties":[ // 该角色的属性列表（数组，每一元素为一个键值对，元素数目不限）（仅在特定情况下需要包含）
+	"properties":[ // 角色的属性（数组，每一元素为一个属性）（仅在特定情况下需要包含）
 		{ // 一项属性
 			"name":"属性的键",
 			"value":"属性的值",
@@ -79,7 +118,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 
 `signature`是一个Base64字符串，其中包含属性值（使用UTF-8编码）的数字签名（使用SHA1withRSA算法，见[PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。
 
-角色属性中目前已知的键有`textures`。它对应的值是一个Base64字符串，内容为JSON字符串，包含角色的材质信息，格式如下：
+角色属性中目前已知的键有`textures`（并不一定会包含）。它对应的值是一个Base64字符串，内容为JSON字符串，包含角色的材质信息，格式如下：
 ```javascript
 {
 	"timestamp":"该属性值被生成时的时间，为Java时间格式（自1970-01-01 00:00:00 UTC至今经过的毫秒数）",
@@ -156,26 +195,49 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 	"selectedProfile":{
 		// ... 绑定的角色，若为空，则不需要包含
 	},
-	"user":{ // 用户信息（仅当请求中requestUser为true时包含）
-		"id":"用户的ID",
-		"properties":[ // 用户的属性
-			{ // 一项属性
-				"name":"属性的键",
-				"value":"属性的值",
-			}
-			// ,...（可以有更多）
+	"user":{
+			// ... 用户信息（仅当请求中requestUser为true时包含）
 		]
 	}
 }
 ```
 
-用户属性中目前已知的键如下（并不一定会包含）：
+### 刷新
+`POST /authserver/refresh`
 
-|键|对应的值|
-|--|--------|
-|preferredLanguage|用户的偏好语言，[Java Locale格式](https://docs.oracle.com/javase/8/docs/api/java/util/Locale.html#toString--)(?)，例如`en`、`zh_CN`|
-|twitch_access_token|[Twitch账户Token](https://dev.twitch.tv/docs/v5/guides/using-the-twitch-api/)，仅当绑定Twitch账户时才存在|
+吊销原令牌，并颁发一个新的令牌。
 
+请求格式：
+```javascript
+{
+	"accessToken":"令牌的accessToken",
+	"clientToken":"令牌的clientToken（可选）",
+	"requestUser":true/false, // 是否在响应中包含用户信息，默认false
+	"selectedProfile":{
+		// ... 要选择的角色（可选）
+	}
+}
+```
+
+当指定`clientToken`时，服务端应检查`accessToken`和`clientToken`是否正确，否则只需要检查`accessToken`。
+
+颁发的新令牌的`clientToken`应与原令牌的相同。`selectedProfile`只有在原令牌绑定的角色为空时才能包含，新令牌应绑定到该项目指定的角色上。
+
+若请求失败，原令牌依然有效。
+
+返回格式：
+```javascript
+{
+	"accessToken":"新令牌的accessToken",
+	"clientToken":"新令牌的clientToken",
+	"selectedProfile":{
+		// ... 新令牌绑定的角色，若为空，则不需要包含
+	},
+	"user":{
+		// ... 用户信息（仅当请求中requestUser为true时包含）
+	}
+}
+```
 
 # 参见
  * [Authentication - wiki.vg](http://wiki.vg/Authentication)
