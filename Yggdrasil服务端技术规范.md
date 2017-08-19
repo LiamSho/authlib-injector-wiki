@@ -196,7 +196,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 		// ... 绑定的角色，若为空，则不需要包含
 	},
 	"user":{
-			// ... 用户信息（仅当请求中requestUser为true时包含）
+		// ... 用户信息（仅当请求中requestUser为true时包含）
 	}
 }
 ```
