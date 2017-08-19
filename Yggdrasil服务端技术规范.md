@@ -197,7 +197,6 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 	},
 	"user":{
 			// ... 用户信息（仅当请求中requestUser为true时包含）
-		]
 	}
 }
 ```
