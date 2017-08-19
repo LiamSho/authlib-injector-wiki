@@ -19,19 +19,19 @@
 
 当遇到本文中已说明的异常情况时，返回的错误信息应符合对应的要求。
 
-下表列举了常见异常情况下的错误信息。
+下表列举了常见异常情况下的错误信息。除特殊说明外，`cause`一般不包含。
 
 **非标准**指由于无法使Mojang的Yggdrasil服务器触发对应异常，而只能推测该种情况下的错误信息。
 
 **未定义中**指该项并没有明确要求。
 
-|异常情况|HTTP状态码|Error|Cause|Error Message|备注|
-|--------|----------|-----|-----|------------|----|
-|一般HTTP异常（非业务异常）|_未定义_|_该HTTP状态对应的Reason Phrase（于[HTTP/1.1](https://tools.ietf.org/html/rfc2616#section-6.1.1)中定义）_|_无_|_未定义_|`404 Not Found`、`405 Method Not Allowed`等属于该情况|
-|令牌无效|403|ForbiddenOperationException|_无_|Invalid token.|
-|密码错误，或短时间内多次登录失败而被暂时禁止登录|403|ForbiddenOperationException|_无_|Invalid credentials. Invalid username or password.|
-|试图向一个已经绑定了角色的令牌指定其要绑定的角色|400|IllegalArgumentException|_无_|Access token already has a profile assigned.|
-|试图向一个令牌绑定不属于其对应用户的角色 _（非标准）_|403|ForbiddenOperationException|_无_|_未定义_|
+|异常情况|HTTP状态码|Error|Error Message|备注|
+|--------|----------|-----|------------|----|
+|一般HTTP异常（非业务异常）|_未定义_|_该HTTP状态对应的Reason Phrase（于[HTTP/1.1](https://tools.ietf.org/html/rfc2616#section-6.1.1)中定义）_|_未定义_|`404 Not Found`、`405 Method Not Allowed`等属于该情况|
+|令牌无效|403|ForbiddenOperationException|Invalid token.|
+|密码错误，或短时间内多次登录失败而被暂时禁止登录|403|ForbiddenOperationException|Invalid credentials. Invalid username or password.|
+|试图向一个已经绑定了角色的令牌指定其要绑定的角色|400|IllegalArgumentException|Access token already has a profile assigned.|
+|试图向一个令牌绑定不属于其对应用户的角色 _（非标准）_|403|ForbiddenOperationException|_未定义_|
 
 
 ## 数据格式
