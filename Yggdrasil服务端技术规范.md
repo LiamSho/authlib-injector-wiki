@@ -25,9 +25,9 @@
 
 **未定义中**指该项并没有明确要求。
 
-|异常情况|HTTP状态码|Error|Error Message|备注|
-|--------|----------|-----|------------|----|
-|一般HTTP异常（非业务异常）|_未定义_|_该HTTP状态对应的Reason Phrase（于[HTTP/1.1](https://tools.ietf.org/html/rfc2616#section-6.1.1)中定义）_|_未定义_|`404 Not Found`、`405 Method Not Allowed`等属于该情况|
+|异常情况|HTTP状态码|Error|Error Message|
+|--------|----------|-----|------------|
+|一般HTTP异常（非业务异常，如 _Not Found_、 _Method Not Allowed_）|_未定义_|_该HTTP状态对应的Reason Phrase（于[HTTP/1.1](https://tools.ietf.org/html/rfc2616#section-6.1.1)中定义）_|_未定义_|
 |令牌无效|403|ForbiddenOperationException|Invalid token.|
 |密码错误，或短时间内多次登录失败而被暂时禁止登录|403|ForbiddenOperationException|Invalid credentials. Invalid username or password.|
 |试图向一个已经绑定了角色的令牌指定其要绑定的角色|400|IllegalArgumentException|Access token already has a profile assigned.|
@@ -142,7 +142,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 
 绑定的角色可以为空。它代表了能使用该令牌进行游戏的角色。
 
-一个账户可以同时有多个令牌，但服务端也应该对令牌数量加以限制。当令牌数量超出限制（如10个）时，则应先吊销最旧的令牌，之后再颁发新的令牌。
+一个用户可以同时有多个令牌，但服务端也应该对令牌数量加以限制。当令牌数量超出限制（如10个）时，则应先吊销最旧的令牌，之后再颁发新的令牌。
 
 #### 令牌的有效时间
 > 以下内容基于揣测，确实有点道理，但也很有可能不正确。
@@ -159,7 +159,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 
 # Yggdrasil API
 
-## 账户部分
+## 用户部分
 
 ### 登录
 `POST /authserver/authenticate`
