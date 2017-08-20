@@ -32,6 +32,7 @@
 |密码错误，或短时间内多次登录失败而被暂时禁止登录|403|ForbiddenOperationException|Invalid credentials. Invalid username or password.|
 |试图向一个已经绑定了角色的令牌指定其要绑定的角色|400|IllegalArgumentException|Access token already has a profile assigned.|
 |试图向一个令牌绑定不属于其对应用户的角色 _（非标准）_|403|ForbiddenOperationException|_未定义_|
+|试图使用一个错误的角色加入服务器|403|ForbiddenOperationException|Invalid token.|
 
 
 ## 数据格式
@@ -255,7 +256,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 
 当指定`clientToken`时，服务端应检查`accessToken`和`clientToken`是否有效，否则只需要检查`accessToken`。
 
-若令牌有效，应返回HTTP状态码`204 No Content`，否则作为令牌无效的异常情况处理。
+若令牌有效，服务端应返回HTTP状态`204 No Content`，否则作为令牌无效的异常情况处理。
 
 ### 吊销令牌
 `POST /authserver/invalidate`
@@ -272,7 +273,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 
 服务端只需要检查`accessToken`，即无论`clientToken`为何值都不会造成影响。
 
-无论操作是否成功，服务端应返回HTTP状态码`204 No Content`。
+无论操作是否成功，服务端应返回HTTP状态`204 No Content`。
 
 ### 登出
 `POST /authserver/signout`
@@ -287,10 +288,71 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 }
 ```
 
-若操作成功，则服务端应返回HTTP状态码`204 No Content`。
+若操作成功，服务端应返回HTTP状态`204 No Content`。
 
 **安全提示：** 该API也可用于判断密码的正确性，因此应受到和登录API一样的速率限制。
+
+## 会话部分
+该部分用于角色进入服务器时的验证。验证流程如下：
+
+ 1. **Minecraft服务端**随机生成一段字符串，发送给**Minecraft客户端**
+ 2. **Minecraft客户端**将该字符串及令牌发送给**Yggdrasil服务端**（要求令牌有效）
+ 3. **Minecraft服务端**请求**Yggdrasil服务端**检查客户端会话的有效性，即是否成功进行第2步
+
+
+
+### 客户端进入服务器
+`POST https://sessionserver.mojang.com/session/minecraft/join`
+
+记录服务端发送给客户端的随机字符串，以备服务端检查。
+
+请求格式：
+```javascript
+{
+	"accessToken":"令牌的accessToken",
+	"selectedProfile":"该令牌绑定的角色的UUID（无符号）",
+	"serverId":"服务端发送给客户端的随机字符串"
+}
+```
+
+仅当`accessToken`有效，且`selectedProfile`与令牌所绑定的角色一致时，操作才成功。
+
+服务端应记录以下信息：
+ * serverId
+ * accessToken
+ * 发送该请求的客户端IP
+
+实现时请注意：以上信息应记录在内存数据库中（如Redis），且应该设置过期时间（如30秒）。介于`serverId`的随机性，可以将其作为主键。
+
+若操作成功，服务端应返回HTTP状态`204 No Content`。
+
+### 服务端验证客户端
+`GET https://sessionserver.mojang.com/session/minecraft/hasJoined?username={}&serverId={}&ip={}`
+
+检查客户端会话的有效性，即数据库中是否存在该`serverId`的记录，且信息正确。
+
+请求参数：
+
+|参数|值|
+|----|--|
+|username|角色的名称|
+|serverId|服务端发送给客户端的随机字符串|
+|ip _（可选）_|在Minecraft服务端处获取到的客户端IP|
+
+`username`需要与`serverId`对应的令牌所绑定的角色的名称相同。
+
+若`ip`参数存在，仅当其值与先前发送[进入服务器请求](#客户端进入服务器)的客户端IP相同时，操作才成功。
+
+返回格式：
+```javascript
+{
+	// ... 令牌所绑定的角色（包含角色属性及数字签名，格式见 §角色信息的序列化）
+}
+```
+
+若操作失败，服务端应返回HTTP状态`204 No Content`。
 
 # 参见
  * [Authentication - wiki.vg](http://wiki.vg/Authentication)
  * [Mojang API - wiki.vg](http://wiki.vg/Mojang_API)
+ * [Protocol - wiki.vg](http://wiki.vg/Protocol)
