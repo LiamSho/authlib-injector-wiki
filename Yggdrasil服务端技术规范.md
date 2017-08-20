@@ -396,11 +396,56 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 	{
 		// 角色信息（注意：不包含角色属性。格式见 §角色信息的序列化）
 	}
-	// ,... 还可以有更多
+	// ,...（可以有更多）
 ]
 ```
 
 **安全提示：** 为防止CC攻击，需要为单次查询的角色数目设置最大值，该值至少为2。
+
+## 扩展API
+以下API并不属于Yggdrasil，它们是为了方便authlib-injector进行自动配置而设计的。如果服务端实现了以下API，authlib-injector只需要API URL就可以自动配置其他的项目。
+
+### 服务端信息获取
+`GET /`
+
+响应格式：
+```javascript
+{
+	"meta":{
+		// 服务端的元数据，内容任意
+	},
+	"skinDomains":[ // 加入皮肤白名单的域名后缀
+		"皮肤域名后缀1"
+		// ,...（可以有更多）
+	],
+	"signaturePublickey":"用于验证数字签名的公钥"
+}
+```
+
+关于`skinDomains`和`signaturePublickey`的详细介绍，可以见[authlib-injector.example.yaml](https://github.com/to2mbn/authlib-injector/blob/master/authlib-injector.example.yaml)
+
+尽管`meta`中内容没有强制要求，但我们建议您包含以下属性：
+
+|Key|Value|
+|---|-----|
+|serverName|服务器名称|
+|implementationName|服务端实现的名称|
+|implementationVersion|服务端实现的版本|
+
+下面给出一段响应的示例：
+```javascript
+{
+	"meta":{
+		"serverName":"to2mbn Minecraft Server",
+		"implementationName":"akir",
+		"implementationVersion":"1.0.0"
+	},
+	"skinDomains":[
+		".to2mbn.org"
+	],
+	"signaturePublickey":"-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAylB4B6m5lz7jwrcFz6Fd\n/fnfUhcvlxsTSn5kIK/2aGG1C3kMy4VjhwlxF6BFUSnfxhNswPjh3ZitkBxEAFY2\n5uzkJFRwHwVA9mdwjashXILtR6OqdLXXFVyUPIURLOSWqGNBtb08EN5fMnG8iFLg\nEJIBMxs9BvF3s3/FhuHyPKiVTZmXY0WY4ZyYqvoKR+XjaTRPPvBsDa4WI2u1zxXM\neHlodT3lnCzVvyOYBLXL6CJgByuOxccJ8hnXfF9yY4F0aeL080Jz/3+EBNG8RO4B\nyhtBf4Ny8NQ6stWsjfeUIvH7bU/4zCYcYOq4WrInXHqS8qruDmIl7P5XXGcabuzQ\nstPf/h2CRAUpP/PlHXcMlvewjmGU6MfDK+lifScNYwjPxRo4nKTGFZf/0aqHCh/E\nAsQyLKrOIYRE0lDG3bzBh8ogIMLAugsAfBb6M3mqCqKaTMAf/VAjh5FFJnjS+7bE\n+bZEV0qwax1CEoPPJL1fIQjOS8zj086gjpGRCtSy9+bTPTfTR/SJ+VUB5G2IeCIt\nkNHpJX2ygojFZ9n5Fnj7R9ZnOM+L8nyIjPu3aePvtcrXlyLhH/hvOfIOjPxOlqW+\nO5QwSFP4OEcyLAUgDdUgyW36Z5mB285uKW/ighzZsOTevVUG2QwDItObIV6i8RCx\nFbN2oDHyPaO5j1tTaBNyVt8CAwEAAQ==\n-----END PUBLIC KEY-----"
+}
+```
 
 # 参见
  * [Authentication - wiki.vg](http://wiki.vg/Authentication)
