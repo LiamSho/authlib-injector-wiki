@@ -299,10 +299,8 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
  2. **Minecraft客户端**将该字符串及令牌发送给**Yggdrasil服务端**（要求令牌有效）
  3. **Minecraft服务端**请求**Yggdrasil服务端**检查客户端会话的有效性，即是否成功进行第2步
 
-
-
 ### 客户端进入服务器
-`POST https://sessionserver.mojang.com/session/minecraft/join`
+`POST /sessionserver/session/minecraft/join`
 
 记录服务端发送给客户端的随机字符串，以备服务端检查。
 
@@ -322,12 +320,13 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
  * accessToken
  * 发送该请求的客户端IP
 
-实现时请注意：以上信息应记录在内存数据库中（如Redis），且应该设置过期时间（如30秒）。介于`serverId`的随机性，可以将其作为主键。
+实现时请注意：以上信息应记录在内存数据库中（如Redis），且应该设置过期时间（如30秒）。
+介于`serverId`的随机性，可以将其作为主键。
 
 若操作成功，服务端应返回HTTP状态`204 No Content`。
 
 ### 服务端验证客户端
-`GET https://sessionserver.mojang.com/session/minecraft/hasJoined?username={}&serverId={}&ip={}`
+`GET /sessionserver/session/minecraft/hasJoined?username={}&serverId={}&ip={}`
 
 检查客户端会话的有效性，即数据库中是否存在该`serverId`的记录，且信息正确。
 
