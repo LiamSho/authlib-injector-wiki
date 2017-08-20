@@ -23,7 +23,7 @@
 
 **非标准**指由于无法使Mojang的Yggdrasil服务器触发对应异常，而只能推测该种情况下的错误信息。
 
-**未定义**指该项并没有明确要求。
+**未定义中**指该项并没有明确要求。
 
 |异常情况|HTTP状态码|Error|Error Message|
 |--------|----------|-----|------------|
@@ -190,13 +190,14 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 	"accessToken":"令牌的accessToken",
 	"clientToken":"令牌的clientToken",
 	"availableProfiles":[ // 用户可用角色列表
-		// ,... 每一项为一个角色
+		// ,... 每一项为一个角色（格式见 §角色信息的序列化）
 	],
 	"selectedProfile":{
-		// ... 绑定的角色，若为空，则不需要包含
+		// ... 绑定的角色，若为空，则不需要包含（格式见 §角色信息的序列化）
 	},
 	"user":{
-		// ... 用户信息（仅当请求中requestUser为true时包含）
+			// ... 用户信息（仅当请求中requestUser为true时包含，格式见 §用户信息的序列化）
+		]
 	}
 }
 ```
@@ -215,7 +216,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 	"clientToken":"令牌的clientToken（可选）",
 	"requestUser":true/false, // 是否在响应中包含用户信息，默认false
 	"selectedProfile":{
-		// ... 要选择的角色（可选）
+		// ... 要选择的角色（可选，格式见 §角色信息的序列化）
 	}
 }
 ```
@@ -232,10 +233,10 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 	"accessToken":"新令牌的accessToken",
 	"clientToken":"新令牌的clientToken",
 	"selectedProfile":{
-		// ... 新令牌绑定的角色，若为空，则不需要包含
+		// ... 新令牌绑定的角色，若为空，则不需要包含（格式见 §角色信息的序列化）
 	},
 	"user":{
-		// ... 用户信息（仅当请求中requestUser为true时包含）
+		// ... 用户信息（仅当请求中requestUser为true时包含，格式见 §用户信息的序列化）
 	}
 }
 ```
