@@ -227,7 +227,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 
 该操作在令牌暂时失效时依然可以执行。若请求失败，原令牌依然有效。
 
-返回格式：
+响应格式：
 ```javascript
 {
 	"accessToken":"新令牌的accessToken",
@@ -326,7 +326,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 若操作成功，服务端应返回HTTP状态`204 No Content`。
 
 ### 服务端验证客户端
-`GET /sessionserver/session/minecraft/hasJoined?username={}&serverId={}&ip={}`
+`GET /sessionserver/session/minecraft/hasJoined?username={username}&serverId={serverId}&ip={ip}`
 
 检查客户端会话的有效性，即数据库中是否存在该`serverId`的记录，且信息正确。
 
@@ -342,7 +342,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 
 若`ip`参数存在，仅当其值与先前发送[进入服务器请求](#客户端进入服务器)的客户端IP相同时，操作才成功。
 
-返回格式：
+响应格式：
 ```javascript
 {
 	// ... 令牌所绑定的角色（包含角色属性及数字签名，格式见 §角色信息的序列化）
@@ -350,6 +350,57 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 ```
 
 若操作失败，服务端应返回HTTP状态`204 No Content`。
+
+## 角色部分
+该部分用于角色信息的查询。
+
+### 查询单个角色
+`GET /sessionserver/session/minecraft/profile/{uuid}?unsigned={unsigned}`
+
+查询指定角色的信息。
+
+请求参数：
+
+|参数|值|
+|----|--|
+|uuid|角色的UUID（无符号）|
+|unsigned _（可选）_|`true`或`false`。是否在响应中**不包含**数字签名，默认为`true`|
+
+响应格式：
+```javascript
+{
+	// ... 角色信息（包含角色属性。若unsigned为true，还需要包含数字签名。格式见 §角色信息的序列化）
+}
+```
+
+若角色不存在，服务端应返回HTTP状态`204 No Content`。
+
+### 批量查询角色
+`POST /api/profiles/minecraft`
+
+查询多个角色的信息。
+
+请求格式：
+```javascript
+[
+	"角色名称1"
+	// ,... 还可以有更多
+]
+```
+
+服务端查询各个角色名称对应的角色信息，并包含在响应中。对于不存在的角色，不需要包含。响应中角色的先后次序无要求。
+
+响应格式：
+```javascript
+[
+	{
+		// 角色信息（注意：不包含角色属性。格式见 §角色信息的序列化）
+	}
+	// ,... 还可以有更多
+]
+```
+
+**安全提示：** 为防止CC攻击，需要为单次查询的角色数目设置最大值，该值至少为2。
 
 # 参见
  * [Authentication - wiki.vg](http://wiki.vg/Authentication)
