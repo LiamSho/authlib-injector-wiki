@@ -9,5 +9,6 @@ Welcome to the authlib-injector wiki!
 
 该项目会对所有API作出详细说明，并且还会定义一些**不属于**Yggdrasil的API。这样做是为了**最简化**指定Yggdrasil服务的流程：只需要填写Yggdrasil服务对应的URL，就可以使用它。
 
+## 本项目与authlib-agent的关系
+authlib-agent项目存在较多历史遗留问题，并且原项目的javaagent部分及后端部分耦合在一起，需要一起构建。因此将原项目的javaagent部分重写，并更名authlib-injector，同时提供更加友好的配置方式，以供其它yggdrasil服务端实现使用。
 
-目前该规范仍处于编写阶段，欢迎各位勘误。
