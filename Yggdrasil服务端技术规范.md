@@ -141,6 +141,8 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 
 其中`accessToken`和`clientToken`为无符号UUID。`accessToken`由服务端随机生成，`clientToken`由客户端提供。
 
+介于`accessToken`的随机性，它可以被作为主键。而`clientToken`不具有唯一性。
+
 绑定的角色可以为空。它代表了能使用该令牌进行游戏的角色。
 
 一个用户可以同时有多个令牌，但服务端也应该对令牌数量加以限制。当令牌数量超出限制（如10个）时，则应先吊销最旧的令牌，之后再颁发新的令牌。
