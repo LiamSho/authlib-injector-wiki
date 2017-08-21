@@ -151,7 +151,7 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 
 `properties`及`signature`项目在无特殊说明的情况下不需要包含。
 
-`signature`是一个Base64字符串，其中包含属性值（使用UTF-8编码）的数字签名（使用SHA1withRSA算法，见[PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。
+`signature`是一个Base64字符串，其中包含属性值（使用UTF-8编码）的数字签名（使用SHA1withRSA算法，见[PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见[签名密钥对](https://github.com/to2mbn/authlib-injector/wiki/%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E5%AF%B9)。
 
 角色属性中目前已知的键有`textures`（并不一定会包含）。它对应的值是一个Base64字符串，内容为JSON字符串，包含角色的材质信息，格式如下：
 ```javascript
