@@ -404,10 +404,10 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 
 **安全提示：** 为防止CC攻击，需要为单次查询的角色数目设置最大值，该值至少为2。
 
-## 扩展API
+# 扩展API
 以下API并不属于Yggdrasil，它们是为了方便authlib-injector进行自动配置而设计的。如果服务端实现了以下API，authlib-injector只需要API URL就可以自动配置其他的项目。
 
-### 服务端信息获取
+## 服务端信息获取
 `GET /`
 
 响应格式：
