@@ -160,11 +160,19 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 	"profileId":"角色UUID（无符号）",
 	"profileName":"角色名称",
 	"textures":{ // 角色的材质
-		"材质类型（如SKIN）":"材质的URL" // 若角色不具有该项材质，则不必包含
+		"材质类型（如SKIN）":{ // 若角色不具有该项材质，则不必包含
+			"url":"材质的URL",
+			"metadata":{ // 材质的元数据，若没有则不必包含
+				"键":"值"
+				// ,...（可以有更多）
+			}
+		}
 		// ,...（可以有更多）
 	}
 }
 ```
+材质元数据中目前已知的键有`model`。
+`model`只出现在`SKIN`材质中，用于表示该角色的模型。它的值可以为`default`或`slim`，其中`default`代表STEVE，`slim`代表ALEX。
 
 ### 令牌（Token）
 令牌与账号为多对一关系。令牌是一种登录凭证，具有时效性。令牌具有以下属性：
