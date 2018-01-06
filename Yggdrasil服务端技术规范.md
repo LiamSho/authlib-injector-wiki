@@ -468,6 +468,9 @@ https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd
 
 关于`skinDomains`和`signaturePublickey`的详细介绍，可以见[authlib-injector.example.yaml](https://github.com/to2mbn/authlib-injector/blob/master/authlib-injector.example.yaml)
 
+> **`signaturePublickey`的格式**：
+> 其内容可以为多行，但行首与行末，以及除头尾两行（`-----BEGIN PUBLIC KEY...`）外每行的中间，都不允许出现空格。
+
 尽管`meta`中内容没有强制要求，但我们建议您包含以下属性：
 
 |Key|Value|
