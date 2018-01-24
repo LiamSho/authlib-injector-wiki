@@ -128,12 +128,85 @@ UUID和名称均为全局唯一，但名称可变。应避免使用名称作为�
 >
 > 如果使用SHA-256作为文件名的生成方法，由于长度不同，不会与Mojang的文件名发生冲突，因此是可行的。
 
-> 实现时请注意：对于玩家上传的材质，服务端应将其读取后重新写入，以避免两幅内容相同的图像由于其中不影响显示的数据不同造成Hash不同。
-
-材质格式为PNG，文件名应为材质的`SHA-256`校验和，如：
+材质格式为PNG，文件名应为材质的hash，如：
 ```
 https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd2886da0a6c34a2161f7ca99
 ```
+
+由于PNG格式图像包含与显示无关的数据，因此即使是两个尺寸与图像内容完全相同的PNG文件，它们的hash值也可能不同。
+为此，需要使用一个仅与图像内容有关的方法来计算材质的hash。规范这个方法如下：
+ 1. 首先定义一个长度为`width * height * 4 + 8`字节的缓存区，其中`width`和`height`为图像的长和宽
+ 2. 填充该缓冲区
+     1. `0~3`字节为`width`，以大端序存储
+     2. `4~7`字节为`height`，以大端序存储
+     3. 对于每一个像素，设其坐标为`(x, y)`，其首地址`offset`为`(y + x * height) * 4 + 8`
+         1. 第`offset + 0`、`offset + 1`、`offset + 2`、`offset + 3`个字节分别为该像素的Alpha、Red、Green、Blue分量
+	     2. 若Alpha分量为`0x00`（透明），则RGB分量皆作为`0x00`处理
+ 3. 计算以上缓冲区内数据的`SHA-256`，作为材质的hash
+
+<details>
+<summary>Java实现示例</summary>
+
+```java
+public static String textureHash(BufferedImage img) throws Exception {
+	MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	int width = img.getWidth();
+	int height = img.getHeight();
+	byte[] buf = new byte[4096];
+
+	putInt(buf, 0, width); // 0~3: width(big-endian)
+	putInt(buf, 4, height); // 4~7: height(big-endian)
+	int pos = 8;
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			// pos+0: alpha
+			// pos+1: red
+			// pos+2: green
+			// pos+3: blue
+			putInt(buf, pos, img.getRGB(x, y));
+			if (buf[pos + 0] == 0xff) {
+				// the pixel is transparent
+				buf[pos + 1] = buf[pos + 2] = buf[pos + 3] = 0;
+			}
+			pos += 4;
+			if (pos == buf.length) {
+				// buffer is full
+				pos = 0;
+				digest.update(buf, 0, buf.length);
+			}
+		}
+	}
+	if (pos > 0) {
+		// flush
+		digest.update(buf, 0, pos);
+	}
+
+	byte[] sha256 = digest.digest();
+	return String.format("%0" + (sha256.length << 1) + "x", new BigInteger(1, sha256)); // to hex
+}
+
+// put an int into the array in big-endian
+private static void putInt(byte[] array, int offset, int x) {
+	array[offset + 0] = (byte) (x >> 24 & 0xff);
+	array[offset + 1] = (byte) (x >> 16 & 0xff);
+	array[offset + 2] = (byte) (x >> 8 & 0xff);
+	array[offset + 3] = (byte) (x >> 0 & 0xff);
+}
+```
+
+</details>
+
+<details>
+<summary>测试样例</summary>
+
+样例输入：[texture-hash-test.png](https://raw.githubusercontent.com/wiki/to2mbn/authlib-injector/texture-hash-test.png)
+
+样例输出：`47a4c518f80f94ad8737713e0325a98e1f2647f962b9a646f58cd0bbd5afe683`
+
+</details>
+
+
+注意：为了防止用户在多个Yggdrasil服务端间切换时出现问题，强烈建议所有Yggdrasil服务端使用以上方法计算hash。
 
 #### 角色信息的序列化
 角色信息序列化后符合以下格式：
