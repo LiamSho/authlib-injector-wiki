@@ -241,6 +241,7 @@ private static void putInt(byte[] array, int offset, int x) {
 
 </details>
 
+
 <details>
 <summary>测试样例</summary>
 
@@ -250,8 +251,11 @@ private static void putInt(byte[] array, int offset, int x) {
 
 </details>
 
+
 建议所有Yggdrasil服务端实现都应将上述算法作为材质hash的计算方法。
 这样可以确保即使相同的材质来自不同的Yggdrasil服务端，它们的hash也是相同的，进而避免客户端不必要的重复下载和存储。
+
+**安全提示：** 无论如何，服务端都不应直接存储用户上传的材质。服务端应当将用户上传的材质读入后，去除其中任何与显示无关的信息（如[PNG中的辅助区块](https://tools.ietf.org/html/rfc2083#page-19)），并重新以PNG格式写入。
 
 ### 令牌（Token）
 令牌与账号为多对一关系。令牌是一种登录凭证，具有时效性。令牌具有以下属性：
