@@ -10,8 +10,8 @@
          * [用户](#用户)
             * [用户信息的序列化](#用户信息的序列化)
          * [角色（Profile）](#角色profile)
-            * [材质URL规范](#材质url规范)
             * [角色信息的序列化](#角色信息的序列化)
+            * [材质URL规范](#材质url规范)
          * [令牌（Token）](#令牌token)
             * [令牌的状态](#令牌的状态)
    * [Yggdrasil API](#yggdrasil-api)
@@ -123,26 +123,71 @@
 
 UUID和名称均为全局唯一，但名称可变。应避免使用名称作为标识。
 
-#### 材质URL规范
-> 目前无法确定文件名的生成方法。从其用途来看应为文件内容的摘要，但其长度(61字符的HEX字符串)不属于任何已知Hash算法。
->
-> 如果使用SHA-256作为文件名的生成方法，由于长度不同，不会与Mojang的文件名发生冲突，因此是可行的。
+#### 角色信息的序列化
+角色信息序列化后符合以下格式：
+```javascript
+{
+	"id":"角色UUID（无符号）",
+	"name":"角色名称",
+	"properties":[ // 角色的属性（数组，每一元素为一个属性）（仅在特定情况下需要包含）
+		{ // 一项属性
+			"name":"属性的键",
+			"value":"属性的值",
+			"signature":"属性值的数字签名（仅在特定情况下需要包含）"
+		}
+		// ,...（可以有更多）
+	]
+}
+```
 
-材质格式为PNG，文件名应为材质的hash，如：
+`properties`及`signature`项目在无特殊说明的情况下不需要包含。
+
+`signature`是一个Base64字符串，其中包含属性值（使用UTF-8编码）的数字签名（使用SHA1withRSA算法，见[PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见[签名密钥对](https://github.com/to2mbn/authlib-injector/wiki/%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E5%AF%B9)。
+
+角色属性中目前已知的键有`textures`（并不一定会包含）。它对应的值是一个Base64字符串，内容为JSON字符串，包含角色的材质信息，格式如下：
+```javascript
+{
+	"timestamp":"该属性值被生成时的时间，为Java时间格式（自1970-01-01 00:00:00 UTC至今经过的毫秒数）",
+	"profileId":"角色UUID（无符号）",
+	"profileName":"角色名称",
+	"textures":{ // 角色的材质
+		"材质类型（如SKIN）":{ // 若角色不具有该项材质，则不必包含
+			"url":"材质的URL",
+			"metadata":{ // 材质的元数据，若没有则不必包含
+				"键":"值"
+				// ,...（可以有更多）
+			}
+		}
+		// ,...（可以有更多）
+	}
+}
+```
+材质元数据中目前已知的键有`model`。
+`model`只出现在`SKIN`材质中，用于表示该角色的模型。它的值可以为`default`或`slim`，其中`default`代表STEVE，`slim`代表ALEX。
+
+#### 材质URL规范
+Minecraft将材质hash作为材质的标识。每当客户端下载一个材质后，便会将其缓存在本地，以后若需要相同hash的材质，则会直接使用缓存。
+而这个hash并不是由客户端计算的。Yggdrasil服务端应先计算好材质hash，将其作为材质URL的文件名，即从URL最后一个`/`（不包括）开始一直到结尾的这一段子串。
+而客户端会直接将URL的文件名作为材质的hash。
+
+例如下面这个URL，它所代表的材质的hash为`e051c27e803ba15de78a1d1e83491411dffb6d7fd2886da0a6c34a2161f7ca99`：
 ```
 https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd2886da0a6c34a2161f7ca99
 ```
 
-由于PNG格式图像包含与显示无关的数据，因此即使是两个尺寸与图像内容完全相同的PNG文件，它们的hash值也可能不同。
-为此，需要使用一个仅与图像内容有关的方法来计算材质的hash。规范这个方法如下：
- 1. 首先定义一个长度为`width * height * 4 + 8`字节的缓存区，其中`width`和`height`为图像的长和宽
+由于PNG格式图像包含与显示无关的数据，因此即使是图像尺寸与内容完全相同的PNG文件，它们的hash值也可能不同。
+为此，需要使用一个仅与图像内容有关的方法来计算材质的hash。规定这个方法如下：
+ 1. 首先创建一个长度为`(width * height * 4 + 8)`字节的缓冲区，其中`width`和`height`为图像的长和宽
  2. 填充该缓冲区
      1. `0~3`字节为`width`，以大端序存储
      2. `4~7`字节为`height`，以大端序存储
-     3. 对于每一个像素，设其坐标为`(x, y)`，其首地址`offset`为`(y + x * height) * 4 + 8`
-         1. 第`offset + 0`、`offset + 1`、`offset + 2`、`offset + 3`个字节分别为该像素的Alpha、Red、Green、Blue分量
+     3. 对于每一个像素，设其坐标为`(x, y)`，其首地址`offset`为`((y + x * height) * 4 + 8)`
+         1. 第`(offset + 0)`、`(offset + 1)`、`(offset + 2)`、`(offset + 3)`个字节分别为该像素的Alpha、Red、Green、Blue分量
 	     2. 若Alpha分量为`0x00`（透明），则RGB分量皆作为`0x00`处理
  3. 计算以上缓冲区内数据的`SHA-256`，作为材质的hash
+
+> 目前无法确定Mojang所使用的hash算法，其输出长度（61个hex字符）不属于任何已知hash算法。
+> 如果使用SHA-256作为hash算法，由于输出长度不同，不会与Mojang的hash算法发生冲突，因此是可行的。
 
 <details>
 <summary>Java实现示例</summary>
@@ -199,56 +244,14 @@ private static void putInt(byte[] array, int offset, int x) {
 <details>
 <summary>测试样例</summary>
 
-样例输入：[texture-hash-test.png](https://raw.githubusercontent.com/wiki/to2mbn/authlib-injector/texture-hash-test.png)
-
-样例输出：`47a4c518f80f94ad8737713e0325a98e1f2647f962b9a646f58cd0bbd5afe683`
+> 样例输入：[texture-hash-test.png](https://raw.githubusercontent.com/wiki/to2mbn/authlib-injector/texture-hash-test.png)
+>
+> 样例输出：`47a4c518f80f94ad8737713e0325a98e1f2647f962b9a646f58cd0bbd5afe683`
 
 </details>
 
-
-注意：为了防止用户在多个Yggdrasil服务端间切换时出现问题，强烈建议所有Yggdrasil服务端使用以上方法计算hash。
-
-#### 角色信息的序列化
-角色信息序列化后符合以下格式：
-```javascript
-{
-	"id":"角色UUID（无符号）",
-	"name":"角色名称",
-	"properties":[ // 角色的属性（数组，每一元素为一个属性）（仅在特定情况下需要包含）
-		{ // 一项属性
-			"name":"属性的键",
-			"value":"属性的值",
-			"signature":"属性值的数字签名（仅在特定情况下需要包含）"
-		}
-		// ,...（可以有更多）
-	]
-}
-```
-
-`properties`及`signature`项目在无特殊说明的情况下不需要包含。
-
-`signature`是一个Base64字符串，其中包含属性值（使用UTF-8编码）的数字签名（使用SHA1withRSA算法，见[PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见[签名密钥对](https://github.com/to2mbn/authlib-injector/wiki/%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E5%AF%B9)。
-
-角色属性中目前已知的键有`textures`（并不一定会包含）。它对应的值是一个Base64字符串，内容为JSON字符串，包含角色的材质信息，格式如下：
-```javascript
-{
-	"timestamp":"该属性值被生成时的时间，为Java时间格式（自1970-01-01 00:00:00 UTC至今经过的毫秒数）",
-	"profileId":"角色UUID（无符号）",
-	"profileName":"角色名称",
-	"textures":{ // 角色的材质
-		"材质类型（如SKIN）":{ // 若角色不具有该项材质，则不必包含
-			"url":"材质的URL",
-			"metadata":{ // 材质的元数据，若没有则不必包含
-				"键":"值"
-				// ,...（可以有更多）
-			}
-		}
-		// ,...（可以有更多）
-	}
-}
-```
-材质元数据中目前已知的键有`model`。
-`model`只出现在`SKIN`材质中，用于表示该角色的模型。它的值可以为`default`或`slim`，其中`default`代表STEVE，`slim`代表ALEX。
+建议所有Yggdrasil服务端实现都应将上述算法作为材质hash的计算方法。
+这样可以确保即使相同的材质来自不同的Yggdrasil服务端，它们的hash也是相同的，进而避免客户端不必要的重复下载和存储。
 
 ### 令牌（Token）
 令牌与账号为多对一关系。令牌是一种登录凭证，具有时效性。令牌具有以下属性：
