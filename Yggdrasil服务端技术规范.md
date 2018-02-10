@@ -209,7 +209,7 @@ public static String textureHash(BufferedImage img) throws Exception {
 			// pos+2: green
 			// pos+3: blue
 			putInt(buf, pos, img.getRGB(x, y));
-			if (buf[pos + 0] == 0xff) {
+			if (buf[pos + 0] == 0) {
 				// the pixel is transparent
 				buf[pos + 1] = buf[pos + 2] = buf[pos + 3] = 0;
 			}
