@@ -488,7 +488,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 **安全提示：** 该API也可用于判断密码的正确性，因此应受到和登录API一样的速率限制。
 
 ## 会话部分
-![Minecraft玩家进服原理](mc入服原理.svg)
+![Minecraft玩家进服原理](https://raw.githubusercontent.com/wiki/to2mbn/authlib-injector/mc%E5%85%A5%E6%9C%8D%E5%8E%9F%E7%90%86.svg?sanitize=true)
 
 该部分用于角色进入服务器时的验证。验证流程如下：
 
