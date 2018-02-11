@@ -488,6 +488,8 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 **安全提示：** 该API也可用于判断密码的正确性，因此应受到和登录API一样的速率限制。
 
 ## 会话部分
+![Minecraft玩家进服原理](mc入服原理.svg)
+
 该部分用于角色进入服务器时的验证。验证流程如下：
 
  1. **Minecraft服务端**随机生成一段字符串，发送给**Minecraft客户端**
