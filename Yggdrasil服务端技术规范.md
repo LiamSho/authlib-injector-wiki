@@ -144,7 +144,7 @@ UUID和名称均为全局唯一，但名称可变。应避免使用名称作为�
 }
 ```
 
-`properties`及`signature`项目在无特殊说明的情况下不需要包含。
+角色属性（`properties`）及数字签名（`signature`）在无特殊说明的情况下不需要包含。
 
 `signature`是一个Base64字符串，其中包含属性值（使用UTF-8编码）的数字签名（使用SHA1withRSA算法，见[PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见[签名密钥对](https://github.com/to2mbn/authlib-injector/wiki/%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E5%AF%B9)。
 
@@ -494,23 +494,23 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 ## 会话部分
 ![Minecraft玩家进服原理](https://raw.githubusercontent.com/wiki/to2mbn/authlib-injector/mc%E5%85%A5%E6%9C%8D%E5%8E%9F%E7%90%86.svg?sanitize=true)
 
-该部分用于角色进入服务器时的验证。验证流程如下：
+该部分用于角色进入服务器时的验证。主要流程如下：
 
- 1. **Minecraft服务端**随机生成一段字符串，发送给**Minecraft客户端**
- 2. **Minecraft客户端**将该字符串及令牌发送给**Yggdrasil服务端**（要求令牌有效）
- 3. **Minecraft服务端**请求**Yggdrasil服务端**检查客户端会话的有效性，即是否成功进行第2步
+ 1. **Minecraft服务端**和**Minecraft客户端**共同生成一段字符串（`serverId`），其可以被认为是随机的
+ 2. **Minecraft客户端**将`serverId`及令牌发送给**Yggdrasil服务端**（要求令牌有效）
+ 3. **Minecraft服务端**请求**Yggdrasil服务端**检查客户端会话的有效性，即客户端是否成功进行第2步
 
 ### 客户端进入服务器
 `POST /sessionserver/session/minecraft/join`
 
-记录服务端发送给客户端的随机字符串，以备服务端检查。
+记录服务端发送给客户端的`serverId`，以备服务端检查。
 
 请求格式：
 ```javascript
 {
 	"accessToken":"令牌的accessToken",
 	"selectedProfile":"该令牌绑定的角色的UUID（无符号）",
-	"serverId":"服务端发送给客户端的随机字符串"
+	"serverId":"服务端发送给客户端的serverId"
 }
 ```
 
@@ -536,17 +536,17 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 |参数|值|
 |----|--|
 |username|角色的名称|
-|serverId|服务端发送给客户端的随机字符串|
+|serverId|服务端发送给客户端的serverId|
 |ip _（可选）_|在Minecraft服务端处获取到的客户端IP|
 
-`username`需要与`serverId`对应的令牌所绑定的角色的名称相同。
+`username`需要与`serverId`所对应令牌所绑定的角色的名称相同。
 
 若`ip`参数存在，仅当其值与先前发送[进入服务器请求](#客户端进入服务器)的客户端IP相同时，操作才成功。
 
 响应格式：
 ```javascript
 {
-	// ... 令牌所绑定的角色（包含角色属性及数字签名，格式见 §角色信息的序列化）
+	// ... 令牌所绑定角色的完整信息（包含角色属性及数字签名，格式见 §角色信息的序列化）
 }
 ```
 
@@ -579,17 +579,17 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 ### 按名称批量查询角色
 `POST /api/profiles/minecraft`
 
-批量查询角色名称所对应的角色信息。
+批量查询角色名称所对应的角色。
 
 请求格式：
 ```javascript
 [
-	"角色名称1"
+	"角色名称"
 	// ,... 还可以有更多
 ]
 ```
 
-服务端查询各个角色名称对应的角色信息，并包含在响应中。对于不存在的角色，不需要包含。响应中角色的先后次序无要求。
+服务端查询各个角色名称所对应的角色信息，并将其包含在响应中。不存在的角色不需要包含。响应中角色信息的先后次序无要求。
 
 响应格式：
 ```javascript
@@ -604,7 +604,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 **安全提示：** 为防止CC攻击，需要为单次查询的角色数目设置最大值，该值至少为2。
 
 # 扩展API
-以下API并不属于Yggdrasil，它们是为了方便authlib-injector进行自动配置而设计的。如果服务端实现了以下API，authlib-injector只需要API URL就可以自动配置其他的项目。
+以下API并不属于Yggdrasil，它们是为了方便authlib-injector进行自动配置而设计的。
 
 ## 服务端信息获取
 `GET /`
