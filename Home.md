@@ -8,8 +8,6 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-Welcome to the authlib-injector wiki!
-
 ## 简介
 该项目的目标：
  * 为修改Minecraft，使其使用**自定义**Yggdrasil服务提供工具
