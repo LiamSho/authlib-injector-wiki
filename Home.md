@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+目录
+=================
+
+- [简介](#%E7%AE%80%E4%BB%8B)
+- [本项目与authlib-agent的关系](#%E6%9C%AC%E9%A1%B9%E7%9B%AE%E4%B8%8Eauthlib-agent%E7%9A%84%E5%85%B3%E7%B3%BB)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 Welcome to the authlib-injector wiki!
 
 ## 简介
@@ -11,4 +21,3 @@ Welcome to the authlib-injector wiki!
 
 ## 本项目与authlib-agent的关系
 authlib-agent项目存在较多历史遗留问题，并且原项目的javaagent部分及后端部分耦合在一起，需要一起构建。因此将原项目的javaagent部分重写，并更名authlib-injector，同时提供更加友好的配置方式，以供其它yggdrasil服务端实现使用。
-

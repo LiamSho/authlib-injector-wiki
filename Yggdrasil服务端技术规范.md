@@ -1,35 +1,39 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 目录
 =================
 
-   * [概述](#概述)
-   * [基本约定](#基本约定)
-      * [请求与响应格式](#请求与响应格式)
-      * [错误信息格式](#错误信息格式)
-      * [数据格式](#数据格式)
-      * [模型](#模型)
-         * [用户](#用户)
-            * [用户信息的序列化](#用户信息的序列化)
-         * [角色（Profile）](#角色profile)
-            * [角色信息的序列化](#角色信息的序列化)
-            * [材质URL规范](#材质url规范)
-         * [令牌（Token）](#令牌token)
-            * [令牌的状态](#令牌的状态)
-   * [Yggdrasil API](#yggdrasil-api)
-      * [用户部分](#用户部分)
-         * [登录](#登录)
-         * [刷新](#刷新)
-         * [验证令牌](#验证令牌)
-         * [吊销令牌](#吊销令牌)
-         * [登出](#登出)
-      * [会话部分](#会话部分)
-         * [客户端进入服务器](#客户端进入服务器)
-         * [服务端验证客户端](#服务端验证客户端)
-      * [角色部分](#角色部分)
-         * [查询单个角色](#查询单个角色)
-         * [批量查询角色](#批量查询角色)
-   * [扩展API](#扩展api)
-      * [服务端信息获取](#服务端信息获取)
-   * [参见](#参见)
+- [概述](#%E6%A6%82%E8%BF%B0)
+- [基本约定](#%E5%9F%BA%E6%9C%AC%E7%BA%A6%E5%AE%9A)
+  - [请求与响应格式](#%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94%E6%A0%BC%E5%BC%8F)
+  - [错误信息格式](#%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E6%A0%BC%E5%BC%8F)
+  - [数据格式](#%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F)
+  - [模型](#%E6%A8%A1%E5%9E%8B)
+    - [用户](#%E7%94%A8%E6%88%B7)
+      - [用户信息的序列化](#%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96)
+    - [角色（Profile）](#%E8%A7%92%E8%89%B2profile)
+      - [角色信息的序列化](#%E8%A7%92%E8%89%B2%E4%BF%A1%E6%81%AF%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96)
+      - [材质URL规范](#%E6%9D%90%E8%B4%A8url%E8%A7%84%E8%8C%83)
+    - [令牌（Token）](#%E4%BB%A4%E7%89%8Ctoken)
+      - [令牌的状态](#%E4%BB%A4%E7%89%8C%E7%9A%84%E7%8A%B6%E6%80%81)
+- [Yggdrasil API](#yggdrasil-api)
+  - [用户部分](#%E7%94%A8%E6%88%B7%E9%83%A8%E5%88%86)
+    - [登录](#%E7%99%BB%E5%BD%95)
+    - [刷新](#%E5%88%B7%E6%96%B0)
+    - [验证令牌](#%E9%AA%8C%E8%AF%81%E4%BB%A4%E7%89%8C)
+    - [吊销令牌](#%E5%90%8A%E9%94%80%E4%BB%A4%E7%89%8C)
+    - [登出](#%E7%99%BB%E5%87%BA)
+  - [会话部分](#%E4%BC%9A%E8%AF%9D%E9%83%A8%E5%88%86)
+    - [客户端进入服务器](#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9B%E5%85%A5%E6%9C%8D%E5%8A%A1%E5%99%A8)
+    - [服务端验证客户端](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%AA%8C%E8%AF%81%E5%AE%A2%E6%88%B7%E7%AB%AF)
+  - [角色部分](#%E8%A7%92%E8%89%B2%E9%83%A8%E5%88%86)
+    - [查询角色属性](#%E6%9F%A5%E8%AF%A2%E8%A7%92%E8%89%B2%E5%B1%9E%E6%80%A7)
+    - [按名称批量查询角色](#%E6%8C%89%E5%90%8D%E7%A7%B0%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2%E8%A7%92%E8%89%B2)
+- [扩展API](#%E6%89%A9%E5%B1%95api)
+  - [服务端信息获取](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
+- [参见](#%E5%8F%82%E8%A7%81)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # 概述
 本文旨在为实现Yggdrasil服务端提供非官方的技术规范。
@@ -551,10 +555,10 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 ## 角色部分
 该部分用于角色信息的查询。
 
-### 查询单个角色
+### 查询角色属性
 `GET /sessionserver/session/minecraft/profile/{uuid}?unsigned={unsigned}`
 
-查询指定角色的信息。
+查询指定角色的完整信息（包含角色属性）。
 
 请求参数：
 
@@ -572,10 +576,10 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 
 若角色不存在，服务端应返回HTTP状态`204 No Content`。
 
-### 批量查询角色
+### 按名称批量查询角色
 `POST /api/profiles/minecraft`
 
-查询多个角色的信息。
+批量查询角色名称所对应的角色信息。
 
 请求格式：
 ```javascript
