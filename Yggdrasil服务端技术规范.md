@@ -248,11 +248,11 @@ private static void putInt(byte[] array, int offset, int x) {
 <details>
 <summary>JavaScript实现示例</summary>
 
-> 本实现使用了[pngjs](https://github.com/lukeapage/pngjs)。
+> 本实现使用了[pngjs-nozlib](https://www.npmjs.com/package/pngjs-nozlib)。
 
 ```javascript
 let crypto = require("crypto");
-let PNG = require("pngjs").PNG;
+let PNG = require("pngjs-nozlib").PNG;
 let fs = require("fs");
 
 function computeTextureHash(image) {
