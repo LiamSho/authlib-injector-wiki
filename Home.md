@@ -21,6 +21,7 @@
 ## 相关项目
  * [yggdrasil-mock](https://github.com/to2mbn/yggdrasil-mock)
     Yggdrasil 服务端规范的参考实现，以及 Yggdrasil API 的测试用例
+	* 基于此项目的 Yggdrasil 服务端演示站点：[example.yggdrasil.yushi.moe](https://github.com/to2mbn/yggdrasil-mock/wiki/%E6%BC%94%E7%A4%BA%E7%AB%99%E7%82%B9)
  * [Yggdrasil API for Blessing Skin](https://github.com/printempw/yggdrasil-api)
     Blessing Skin 皮肤站的 Yggdrasil 插件
  * [HMCL](https://github.com/huanghongxun/HMCL)
