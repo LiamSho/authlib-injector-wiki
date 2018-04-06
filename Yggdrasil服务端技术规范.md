@@ -32,6 +32,7 @@
 - [扩展API](#%E6%89%A9%E5%B1%95api)
   - [服务端信息获取](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
 - [参见](#%E5%8F%82%E8%A7%81)
+- [参考实现](#%E5%8F%82%E8%80%83%E5%AE%9E%E7%8E%B0)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -655,3 +656,6 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
  * [Authentication - wiki.vg](http://wiki.vg/Authentication)
  * [Mojang API - wiki.vg](http://wiki.vg/Mojang_API)
  * [Protocol - wiki.vg](http://wiki.vg/Protocol)
+
+# 参考实现
+[yggdrasil-mock](https://github.com/to2mbn/yggdrasil-mock) 为本规范的参考实现。
