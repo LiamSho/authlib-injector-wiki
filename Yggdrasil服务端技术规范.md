@@ -511,6 +511,8 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 ## 会话部分
 ![Minecraft 玩家进服原理](https://raw.githubusercontent.com/wiki/to2mbn/authlib-injector/mc%E5%85%A5%E6%9C%8D%E5%8E%9F%E7%90%86.svg?sanitize=true)
 
+> 上图使用 ProcessOn 绘制，导出为 SVG。[原始图像](https://www.processon.com/view/link/5a7fbbbae4b0812a0f102187)
+
 该部分用于角色进入服务器时的验证。主要流程如下：
 
  1. **Minecraft 服务端**和 **Minecraft 客户端**共同生成一段字符串（`serverId`），其可以被认为是随机的
