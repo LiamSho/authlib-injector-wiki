@@ -74,7 +74,7 @@
 |令牌无效|403|ForbiddenOperationException|Invalid token.|
 |密码错误，或短时间内多次登录失败而被暂时禁止登录|403|ForbiddenOperationException|Invalid credentials. Invalid username or password.|
 |试图向一个已经绑定了角色的令牌指定其要绑定的角色|400|IllegalArgumentException|Access token already has a profile assigned.|
-|试图向一个令牌绑定不属于其对应用户的角色_（非标准）_|403|ForbiddenOperationException|_未定义_|
+|试图向一个令牌绑定不属于其对应用户的角色 _（非标准）_|403|ForbiddenOperationException|_未定义_|
 |试图使用一个错误的角色加入服务器|403|ForbiddenOperationException|Invalid token.|
 
 
