@@ -181,6 +181,9 @@ Minecraft 将材质 hash 作为材质的标识。每当客户端下载一个材�
 https://yggdrasil.example.com/textures/e051c27e803ba15de78a1d1e83491411dffb6d7fd2886da0a6c34a2161f7ca99
 ```
 
+> 安全警告：
+>  * 材质 URL 响应头中的 `Content-Type` 必须为 `image/png`。若未指定，则存在 MIME Sniffing Attack 的风险。
+
 由于 PNG 格式图像包含与显示无关的数据，因此即使是图像尺寸与内容完全相同的 PNG 文件，它们的 hash 值也可能不同。
 为此，需要使用一个仅与图像内容有关的方法来计算材质的 hash。规定这个方法如下：
  1. 首先创建一个长度为 `(width * height * 4 + 8)` 字节的缓冲区，其中 `width` 和 `height` 为图像的长和宽
