@@ -11,7 +11,7 @@
 本文主要介绍如何在 Minecraft 服务端使用 authlib-injector。
 
 ## 原版服务端、Spigot 等
-设置 `online-mode` 为 `true`，然后[指定 javaagent](https://github.com/to2mbn/authlib-injector/wiki/启动器技术规范#添加-jvm-参数)即可：
+设置 `online-mode` 为 `true`，然后[指定 javaagent](https://github.com/to2mbn/authlib-injector/wiki/启动器技术规范#添加-jvm-参数) 即可：
 ```
 -javaagent:{authlib-injector.jar 的路径}={Yggdrasil 服务端的 URL（API Root）}
 ```
