@@ -307,6 +307,18 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 > 样例输入：[texture-hash-test.png](https://raw.githubusercontent.com/wiki/to2mbn/authlib-injector/texture-hash-test.png)
 >
 > 样例输出：`47a4c518f80f94ad8737713e0325a98e1f2647f962b9a646f58cd0bbd5afe683`
+>
+> 使用上述方法将图片读入到缓冲区，缓冲区中内容如下：
+> ```
+> 00 00 00 02 // 宽度：2
+> 00 00 00 03 // 高度：3
+> ff ff 00 00 // 像素 (0,0)：红
+> ff 00 00 ff // 像素 (0,1)：蓝
+> ff ff 00 ff // 像素 (0,2)：紫
+> ff 00 ff 00 // 像素 (1,0)：绿
+> 00 00 00 00 // 像素 (1,1)：透明
+> ff ff ff 00 // 像素 (1,2)：黄
+> ```
 
 </details>
 
