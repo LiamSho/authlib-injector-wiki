@@ -657,10 +657,9 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 }
 ```
 
-关于 `skinDomains` 和 `signaturePublickey` 的详细介绍，可以见 [authlib-injector.example.yaml](https://github.com/to2mbn/authlib-injector/blob/master/authlib-injector.example.yaml)
+Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.minecraft.net`、`.mojang.com` 或 `skinDomains` 中任意一项结尾的域名时，Minecraft 才会加载此材质。
 
-> **`signaturePublickey` 的格式：**
-> 其内容可以为多行，但行首与行末，以及除头尾两行（`-----BEGIN PUBLIC KEY...`）外每行的中间，都不允许出现空格。
+`signaturePublickey` 是 PEM 格式的公钥，用于验证角色属性的数字签名。其以 `-----BEGIN PUBLIC KEY-----` 开头，以 `-----END PUBLIC KEY-----` 结尾，中间允许出现换行符，但不允许出现其他空白字符。
 
 尽管 `meta` 中内容没有强制要求，但我们建议您包含以下属性：
 
