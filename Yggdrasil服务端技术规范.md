@@ -672,15 +672,15 @@ Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.mine
 下面给出一段响应的示例：
 ```javascript
 {
-	"meta":{
-		"serverName":"to2mbn Minecraft Server",
-		"implementationName":"akir",
-		"implementationVersion":"1.0.0"
-	},
-	"skinDomains":[
-		".to2mbn.org"
-	],
-	"signaturePublickey":"-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAylB4B6m5lz7jwrcFz6Fd\n/fnfUhcvlxsTSn5kIK/2aGG1C3kMy4VjhwlxF6BFUSnfxhNswPjh3ZitkBxEAFY2\n5uzkJFRwHwVA9mdwjashXILtR6OqdLXXFVyUPIURLOSWqGNBtb08EN5fMnG8iFLg\nEJIBMxs9BvF3s3/FhuHyPKiVTZmXY0WY4ZyYqvoKR+XjaTRPPvBsDa4WI2u1zxXM\neHlodT3lnCzVvyOYBLXL6CJgByuOxccJ8hnXfF9yY4F0aeL080Jz/3+EBNG8RO4B\nyhtBf4Ny8NQ6stWsjfeUIvH7bU/4zCYcYOq4WrInXHqS8qruDmIl7P5XXGcabuzQ\nstPf/h2CRAUpP/PlHXcMlvewjmGU6MfDK+lifScNYwjPxRo4nKTGFZf/0aqHCh/E\nAsQyLKrOIYRE0lDG3bzBh8ogIMLAugsAfBb6M3mqCqKaTMAf/VAjh5FFJnjS+7bE\n+bZEV0qwax1CEoPPJL1fIQjOS8zj086gjpGRCtSy9+bTPTfTR/SJ+VUB5G2IeCIt\nkNHpJX2ygojFZ9n5Fnj7R9ZnOM+L8nyIjPu3aePvtcrXlyLhH/hvOfIOjPxOlqW+\nO5QwSFP4OEcyLAUgDdUgyW36Z5mB285uKW/ighzZsOTevVUG2QwDItObIV6i8RCx\nFbN2oDHyPaO5j1tTaBNyVt8CAwEAAQ==\n-----END PUBLIC KEY-----"
+    "meta": {
+        "implementationName": "yggdrasil-mock-server",
+        "implementationVersion": "0.0.1-SNAPSHOT-e60f4d5",
+        "serverName": "yushijinhun's Yggdrasil Example Server"
+    },
+    "skinDomains": [
+        ".yushi.moe"
+    ],
+    "signaturePublickey": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAnhEHrOIVm2ReCJIIR/1RHAHzkoJjpS8t\nIVfu+JWQKFd4SiVfc/Ym1T2rsmoWVtlppOcWYLSv3XVzpSJS1yk79p6cmASUPU9ENotFMCCi+sdT\nAVo/RKV7mxZHiz8g3H3JdegGMA1nEiYV5l9ue233d4/2MytXjKF8DVskkWZbfN6pRTiaCsRyjt40\nC3XhThBQzVIyjs75fpGNImjCvNlw2Dpy+AvdcLlT75hmGM8UBh8bkshNwBl0JDsE8SL9Qanen2Tk\noXVFoAMKoUsu1u0Kfwjzit52CutU2JXSSxp68KntcKA5d11520Vt51OvRGnNnOtMg6Qqgql56tAL\niy9HJAZpA1In6Kc6epK9vDH7AqZd9QRPBcTsGFdoO8MqegIJZK0zxQY4jCshO0Sxk/EAY5MdwBtB\nr/hGel5JkZByJqanZYV4dKlmNqTZk9hoakv1cb3e8ku2dXRgvtjJvkFayQFqQYpXgLX4ZIx1V87c\nHb1L5RGyAfB5y+UpPW+igMTRgIKN0OWHroTI9W+hSNFjAVj7XPWwp3vRBhdSABiOL7IHsk8e4VcE\nwiAuYGtRi8o/7IJpiZBBh1UkzQ/m1H7ohzjduvc0pYtp053YOx9Tmf0gj8U3dYNiE1gmfBDRnDwJ\nBxCKAYEv9g1uPC0yeJr7EN06Dbb6QQMA+CsbOSS50A0CAwEAAQ==\n-----END PUBLIC KEY-----\n"
 }
 ```
 
