@@ -659,7 +659,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 
 Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.minecraft.net`、`.mojang.com` 或 `skinDomains` 中任意一项结尾的域名时，Minecraft 才会加载此材质。
 
-`signaturePublickey` 是 PEM 格式的公钥，用于验证角色属性的数字签名。其以 `-----BEGIN PUBLIC KEY-----` 开头，以 `-----END PUBLIC KEY-----` 结尾，中间允许出现换行符，但不允许出现其他空白字符。
+`signaturePublickey` 是 PEM 格式的公钥，用于验证角色属性的数字签名。其以 `-----BEGIN PUBLIC KEY-----` 开头，以 `-----END PUBLIC KEY-----` 结尾，中间允许出现换行符，但不允许出现其他空白字符（亦允许文末出现换行符）。
 
 尽管 `meta` 中内容没有强制要求，但我们建议您包含以下属性：
 
