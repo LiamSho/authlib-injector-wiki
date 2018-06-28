@@ -19,9 +19,9 @@
 该项目会对所有 API 作出详细说明，并且还会定义一些不属于 Yggdrasil 的 API 。这样做是为了最简化指定 Yggdrasil 服务的流程：只需要填写 Yggdrasil 服务对应的 URL ，就可以使用它。
 
 ## 相关项目
- * [yggdrasil-mock](https://github.com/to2mbn/yggdrasil-mock)
+ * [yggdrasil-mock](https://github.com/yushijinhun/yggdrasil-mock)
     Yggdrasil 服务端规范的参考实现，以及 Yggdrasil API 的测试用例
-	* 基于此项目的 Yggdrasil 服务端演示站点：[example.yggdrasil.yushi.moe](https://github.com/to2mbn/yggdrasil-mock/wiki/演示站点)
+	* 基于此项目的 Yggdrasil 服务端演示站点：[example.yggdrasil.yushi.moe](https://github.com/yushijinhun/yggdrasil-mock/wiki/演示站点)
  * [Yggdrasil API for Blessing Skin](https://github.com/printempw/yggdrasil-api)
     Blessing Skin 皮肤站的 Yggdrasil 插件
  * [HMCL](https://github.com/huanghongxun/HMCL)

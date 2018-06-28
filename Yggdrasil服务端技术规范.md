@@ -148,7 +148,7 @@ UUID 和名称均为全局唯一，但名称可变。应避免使用名称作为
 
 角色属性（`properties`）及数字签名（`signature`）在无特殊说明的情况下不需要包含。
 
-`signature` 是一个 Base64 字符串，其中包含属性值（使用 UTF-8 编码）的数字签名（使用 SHA1withRSA 算法，见 [PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见 [签名密钥对](https://github.com/to2mbn/authlib-injector/wiki/%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E5%AF%B9)。
+`signature` 是一个 Base64 字符串，其中包含属性值（使用 UTF-8 编码）的数字签名（使用 SHA1withRSA 算法，见 [PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见 [签名密钥对](https://github.com/yushijinhun/authlib-injector/wiki/%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E5%AF%B9)。
 
 角色属性中目前已知的键有 `textures`（并不一定会包含）。它对应的值是一个 Base64 字符串，内容为 JSON 字符串，包含角色的材质信息，格式如下：
 ```javascript
@@ -304,7 +304,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 <details>
 <summary>测试样例</summary>
 
-> 样例输入：[texture-hash-test.png](https://raw.githubusercontent.com/wiki/to2mbn/authlib-injector/texture-hash-test.png)
+> 样例输入：[texture-hash-test.png](https://raw.githubusercontent.com/wiki/yushijinhun/authlib-injector/texture-hash-test.png)
 >
 > 样例输出：`47a4c518f80f94ad8737713e0325a98e1f2647f962b9a646f58cd0bbd5afe683`
 >
@@ -331,7 +331,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 >  * 若不对用户上传材质进行处理，则**可能导致远程代码执行**
 >  * 在读取材质前，若不先检查图像大小，则**可导致拒绝服务攻击**
 >
-> 关于此安全缺陷的详细信息：[未经检查的用户上传材质可能导致远程代码执行 #10](https://github.com/to2mbn/authlib-injector/issues/10)
+> 关于此安全缺陷的详细信息：[未经检查的用户上传材质可能导致远程代码执行 #10](https://github.com/yushijinhun/authlib-injector/issues/10)
 
 除了位图数据外，PNG 文件还可以存储其他数据。如果 Yggdrasil 服务端不对用户上传的材质进行检查，则攻击者可以在其中藏匿恶意代码，并通过 Yggdrasil 服务端分发到客户端。因此，Yggdrasil 服务端**必须**对用户上传的材质进行处理，除去其中任何与位图无关的数据。具体做法如下：
  1. 读取该 PNG 文件中图像的大小，如果过大则应拒绝。
@@ -524,7 +524,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 **安全提示：** 该 API 也可用于判断密码的正确性，因此应受到和登录 API 一样的速率限制。
 
 ## 会话部分
-![Minecraft 玩家进服原理](https://raw.githubusercontent.com/wiki/to2mbn/authlib-injector/mc%E5%85%A5%E6%9C%8D%E5%8E%9F%E7%90%86.svg?sanitize=true)
+![Minecraft 玩家进服原理](https://raw.githubusercontent.com/wiki/yushijinhun/authlib-injector/mc%E5%85%A5%E6%9C%8D%E5%8E%9F%E7%90%86.svg?sanitize=true)
 
 > 上图使用 ProcessOn 绘制，导出为 SVG。[原始图像](https://www.processon.com/view/link/5a7fbbbae4b0812a0f102187)
 
@@ -690,4 +690,4 @@ Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.mine
  * [Protocol - wiki.vg](http://wiki.vg/Protocol)
 
 # 参考实现
-[yggdrasil-mock](https://github.com/to2mbn/yggdrasil-mock) 为本规范的参考实现。
+[yggdrasil-mock](https://github.com/yushijinhun/yggdrasil-mock) 为本规范的参考实现。
