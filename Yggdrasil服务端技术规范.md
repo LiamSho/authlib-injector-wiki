@@ -124,7 +124,7 @@
    * 可选值：STEVE，ALEX
  * 材质
    * 类型为映射
-   * key 可选值有：SKIN，CAPE，ELYTRA
+   * key 可选值有：SKIN，CAPE
    * value 类型为 URL
 
 UUID 和名称均为全局唯一，但名称可变。应避免使用名称作为标识。
