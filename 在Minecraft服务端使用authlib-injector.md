@@ -17,31 +17,31 @@
 
 ## 原版服务端、Spigot 等
 
-**首先，你需要在 `server.properties` 中将 `online-mode` 设置为 `true`。**
-
-接下来，你需要编辑 Minecraft 服务端的启动脚本（在 Windows 下其文件后缀名一般为 `.bat`，使用文本编辑器打开即可），启动脚本一般如下：
-
-```
-java -Xmx1024M -jar minecraft_server.1.12.2.jar nogui
-```
-
-你的启动脚本可能会与上例不同，但你只需**在 `-jar` 前**插入以下参数即可：
+请将服务器的 `online-mode` 设置为 `true`，然后在服务器启动命令中添加 `-javaagent` 参数：
 
 ```
 -javaagent:{path/to/authlib-injector.jar}={https://your-yggdrasil-api-root.com}
 ```
 
-* `{path/to/authlib-injector.jar}` 表示你下载的 authlib-injector JAR 文件的路径（相对路径与绝对路径皆可）。
-* `{https://your-yggdrasil-api-root.com}` 表示 Yggdrasil 服务端的 API Root。
+- `{path/to/authlib-injector.jar}` 表示你在上一步中下载的 `.jar` 文件所在的位置（相对路径、绝对路径皆可）。
+- `{https://your-yggdrasil-api-root.com}` 表示你的 Yggdrasil 服务器的 API Root。
 
-例如：
-* 你下载到的 authlib-injector JAR 文件名为 `authlib-injector-1.1.18-daa6fb4.jar`。
-* 你将其放到了与服务端 JAR `minecraft_server.1.12.2.jar` 相同的目录下。
-* Yggdrasil 服务端的 API Root 为 `https://example.com/api/yggdrasil`。
+例如，这是原先的启动命令：
 
-以上面的启动脚本为例，其修改后内容如下：
 ```
-java -Xmx1024M -javaagent:authlib-injector-1.1.18-daa6fb4.jar=https://example.com/api/yggdrasil -jar minecraft_server.1.12.2.jar nogui
+java -jar minecraft_server.1.12.2.jar nogui
+```
+
+假设：
+
+- 你下载到的 authlib-injector 文件名为 `authlib-injector.jar`
+- 你将其放到了与服务端核心 `minecraft_server.1.12.2.jar` 相同的目录下
+- 你的 Yggdrasil 服务器 API Root 为 `https://example.yggdrasil.yushi.moe`
+
+那么添加参数后的命令行应该如下：
+
+```
+java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar minecraft_server.1.12.2.jar nogui
 ```
 
 ## BungeeCord
