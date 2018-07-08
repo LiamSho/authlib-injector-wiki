@@ -114,7 +114,6 @@
 |键|对应的值|
 |--|--------|
 |preferredLanguage|用户的偏好语言，[Java Locale 格式](https://docs.oracle.com/javase/8/docs/api/java/util/Locale.html#toString--)(?)，例如 `en`、`zh_CN`|
-|twitch_access_token|[Twitch 账户 Token](https://dev.twitch.tv/docs/v5/guides/using-the-twitch-api/)，仅当绑定 Twitch 账户时才存在|
 
 ### 角色（Profile）
 > Mojang 当前不支持多角色，不保证多角色部分内容的正确性。
