@@ -23,7 +23,7 @@
 -javaagent:{path/to/authlib-injector.jar}={https://your-yggdrasil-api-root.com}
 ```
 
-- `{path/to/authlib-injector.jar}` 表示你在[上一步](获取-authlib-injector)中下载的 JAR 文件所在的位置（相对路径、绝对路径皆可）。
+- `{path/to/authlib-injector.jar}` 表示你在[上一步](#获取-authlib-injector)中下载的 JAR 文件所在的位置（相对路径、绝对路径皆可）。
 - `{https://your-yggdrasil-api-root.com}` 表示你的 Yggdrasil 服务端的 API Root。
 
 例如，这是原先的启动命令：
