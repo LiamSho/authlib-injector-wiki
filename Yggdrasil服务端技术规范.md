@@ -12,6 +12,8 @@
     - [用户](#%E7%94%A8%E6%88%B7)
       - [用户信息的序列化](#%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96)
     - [角色（Profile）](#%E8%A7%92%E8%89%B2profile)
+      - [角色 UUID 的生成](#%E8%A7%92%E8%89%B2-uuid-%E7%9A%84%E7%94%9F%E6%88%90)
+        - [兼容离线验证](#%E5%85%BC%E5%AE%B9%E7%A6%BB%E7%BA%BF%E9%AA%8C%E8%AF%81)
       - [角色信息的序列化](#%E8%A7%92%E8%89%B2%E4%BF%A1%E6%81%AF%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96)
       - [材质 URL 规范](#%E6%9D%90%E8%B4%A8-url-%E8%A7%84%E8%8C%83)
       - [用户上传材质的安全性](#%E7%94%A8%E6%88%B7%E4%B8%8A%E4%BC%A0%E6%9D%90%E8%B4%A8%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7)
@@ -128,6 +130,22 @@
    * value 类型为 URL
 
 UUID 和名称均为全局唯一，但名称可变。应避免使用名称作为标识。
+
+#### 角色 UUID 的生成
+若不考虑兼容性，角色的 UUID 一般为随机生成（[Version 4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))）。
+
+但 Minecraft 仅使用 UUID 作为角色标识符，不同 UUID 的角色即使名称相同也被认为是不同的。如果一个 Minecraft 服务器从其他登录系统（正版验证、离线验证或其他）迁移到本登录系统，并且角色的 UUID 发生了变化，则该角色的数据将丢失。为了避免这种情况，必须保证对于同一个角色，本系统生成的 UUID 与其在先前系统中的 UUID 是相同的。
+
+##### 兼容离线验证
+若 Minecraft 服务器原先采用的是离线验证，则角色 UUID 是角色名称的一元函数。如果 Yggdrasil 服务端使用此方法生成角色 UUID，就可以实现与离线验证系统之间的双向兼容，即可以在不丢失角色数据的情况下，在离线验证系统和本登录系统之间切换。
+
+从角色名称计算角色 UUID 的代码如下（Java）：
+```java
+UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardCharsets.UTF_8))
+```
+
+在其他语言中的实现：
+ * [PHP](https://gist.github.com/games647/2b6a00a8fc21fd3b88375f03c9e2e603)
 
 #### 角色信息的序列化
 角色信息序列化后符合以下格式：
