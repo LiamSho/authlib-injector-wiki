@@ -17,14 +17,14 @@
 
 ## 原版服务端、Spigot 等
 
-请将服务器的 `online-mode` 设置为 `true`，然后在服务器启动命令中添加 `-javaagent` 参数：
+请将服务端的 `online-mode` 设置为 `true`，然后在其启动命令中添加以下 JVM 参数：
 
 ```
 -javaagent:{path/to/authlib-injector.jar}={https://your-yggdrasil-api-root.com}
 ```
 
-- `{path/to/authlib-injector.jar}` 表示你在上一步中下载的 `.jar` 文件所在的位置（相对路径、绝对路径皆可）。
-- `{https://your-yggdrasil-api-root.com}` 表示你的 Yggdrasil 服务器的 API Root。
+- `{path/to/authlib-injector.jar}` 表示你在[上一步](获取-authlib-injector)中下载的 JAR 文件所在的位置（相对路径、绝对路径皆可）。
+- `{https://your-yggdrasil-api-root.com}` 表示你的 Yggdrasil 服务端的 API Root。
 
 例如，这是原先的启动命令：
 
@@ -34,9 +34,9 @@ java -jar minecraft_server.1.12.2.jar nogui
 
 假设：
 
-- 你下载到的 authlib-injector 文件名为 `authlib-injector.jar`
-- 你将其放到了与服务端核心 `minecraft_server.1.12.2.jar` 相同的目录下
-- 你的 Yggdrasil 服务器 API Root 为 `https://example.yggdrasil.yushi.moe`
+- 你下载到的 authlib-injector JAR 文件名为 `authlib-injector.jar`。
+- 你将其放到了与服务端 JAR `minecraft_server.1.12.2.jar` 相同的目录下。
+- 你的 Yggdrasil 服务端 API Root 为 `https://example.yggdrasil.yushi.moe`。
 
 那么添加参数后的命令行应该如下：
 
