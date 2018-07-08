@@ -51,7 +51,7 @@
 ## 请求与响应格式
 若无特殊说明，请求与响应均为 JSON 格式（如果有 body），`Content-Type` 均为 `application/json; charset=utf-8`。
 
-所有 API 都应该使用 https 协议。
+所有 API 都应该使用 HTTPS 协议。
 
 ## 错误信息格式
 ```javascript
@@ -123,10 +123,10 @@
  * UUID
  * 名称
  * 材质模型
-   * 可选值：STEVE，ALEX
+   * 可选值：STEVE、ALEX
  * 材质
    * 类型为映射
-   * key 可选值有：SKIN，CAPE
+   * key 可选值有：SKIN、CAPE
    * value 类型为 URL
 
 UUID 和名称均为全局唯一，但名称可变。应避免使用名称作为标识。
