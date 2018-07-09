@@ -18,8 +18,6 @@ authlib-injector 的最新版本可以直接从 [`https://authlib-injector.yushi
 # 下载 API
 authlib-injector 项目提供了一组 API 用于下载 authlib-injector 构件。其 API 入口为 [`https://authlib-injector.yushi.moe/`](https://authlib-injector.yushi.moe/)。
 
-> 注意：旧下载 API（`https://authlib-injector.to2mbn.org/`）已被弃用，不再提供更新版本的下载，且在将来会停止服务。请尽快迁移到新 API。
-
 ## 获取版本列表
 `GET /artifacts.json`
 
