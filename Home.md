@@ -20,12 +20,14 @@
 
 ## 相关项目
  * [yggdrasil-mock](https://github.com/yushijinhun/yggdrasil-mock)
-    Yggdrasil 服务端规范的参考实现，以及 Yggdrasil API 的测试用例
-	* 基于此项目的 Yggdrasil 服务端演示站点：[example.yggdrasil.yushi.moe](https://github.com/yushijinhun/yggdrasil-mock/wiki/演示站点)
+   * Yggdrasil 服务端规范的参考实现，以及 Yggdrasil API 的测试用例
+   * 基于此项目的 Yggdrasil 服务端演示站点：[example.yggdrasil.yushi.moe](https://github.com/yushijinhun/yggdrasil-mock/wiki/演示站点)
+ * [BMCLAPI](https://bmclapidoc.bangbang93.com/#api-Mirrors-Mirrors_authlib_injector)
+   * BMCLAPI 为 authlib-injector 下载提供了一个镜像
  * [Yggdrasil API for Blessing Skin](https://github.com/printempw/yggdrasil-api)
-    Blessing Skin 皮肤站的 Yggdrasil 插件
+   * Blessing Skin 皮肤站的 Yggdrasil 插件
  * [HMCL](https://github.com/huanghongxun/HMCL)
-    HMCL v3 支持本规范
+   * HMCL v3 支持本规范
 
 ## 本项目与 authlib-agent 的关系
 authlib-agent 项目存在较多历史遗留问题，并且原项目的 javaagent 部分及后端部分耦合在一起，需要一起构建。因此将原项目的 javaagent 部分重写，并更名 authlib-injector ，同时提供更加友好的配置方式，以供其它 Yggdrasil 服务端实现使用。

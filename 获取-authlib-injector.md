@@ -8,6 +8,7 @@
   - [获取版本列表](#%E8%8E%B7%E5%8F%96%E7%89%88%E6%9C%AC%E5%88%97%E8%A1%A8)
   - [获取特定版本](#%E8%8E%B7%E5%8F%96%E7%89%B9%E5%AE%9A%E7%89%88%E6%9C%AC)
   - [获取最新版本](#%E8%8E%B7%E5%8F%96%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC)
+  - [BMCLAPI 镜像](#bmclapi-%E9%95%9C%E5%83%8F)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -57,3 +58,10 @@ URL 中的 `{build_number}` 参数代表版本构建号。
 `GET /artifact/latest.json`
 
 响应格式[同上](#获取特定版本)。如果你只需要获取最新版本，使用此 API 足矣。
+
+## BMCLAPI 镜像
+> 使用 BMCLAPI 时请遵守 [BMCLAPI 的协议](https://bmclapidoc.bangbang93.com/#api-_)。
+
+BMCLAPI 为本下载 API 提供了一个[镜像](https://bmclapidoc.bangbang93.com/#api-Mirrors-Mirrors_authlib_injector)，其入口为 [`https://bmclapi2.bangbang93.com/mirrors/authlib-injector/`](https://bmclapi2.bangbang93.com/mirrors/authlib-injector/)。
+
+需要注意的是，返回的版本信息中，`download_url` 依然指向源站（`authlib-injector.yushi.moe`）。你需要将其中的 `https://authlib-injector.yushi.moe/` 替换为 `https://bmclapi2.bangbang93.com/mirrors/authlib-injector/`。
