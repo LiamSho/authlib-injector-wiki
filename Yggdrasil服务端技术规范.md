@@ -621,7 +621,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 响应格式：
 ```javascript
 {
-	// ... 角色信息（包含角色属性。若 unsigned 为 true，还需要包含数字签名。格式见 §角色信息的序列化）
+	// ... 角色信息（包含角色属性。若 unsigned 为 false，还需要包含数字签名。格式见 §角色信息的序列化）
 }
 ```
 
