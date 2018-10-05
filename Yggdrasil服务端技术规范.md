@@ -701,17 +701,6 @@ Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.mine
 }
 ```
 
-# API 地址指示 [proposed]
-> 该规范处于 proposed 状态，将来可能有较大改动。
-
-> 注意：这是一个非必须实现的功能。
-
-API 地址指示是一个 HTTP 响应头字段，其名称为 `X-Authlib-Injector-API-Indication`，其值为一个指向 Yggdrasil API Root 的 URL（相对或绝对均可）。
-
-该字段指示用户当前访问的网站支持 Yggdrasil API。你可以在你网站的首页（或所有页面）添加该 HTTP 头字段。这样用户就不必在启动器中输入完整的 API Root，只需输入网站的首页地址即可。启动器会识别该 HTTP 头字段，并使用其所指的 URL 作为 API Root（需要启动器支持）。
-
-例如，`https://example.com/` 是一个皮肤站的首页。若在 `https://example.com/` 的响应中添加 HTTP 头字段 `X-Authlib-Injector-API-Indication: /api/yggdrasil/`，那么当用户向启动器中添加 `https://example.com/` 为 Yggdrasil 服务器时，启动器会自动将其解析为 `https://example.com/api/yggdrasil/`。
-
 # 参见
  * [Authentication - wiki.vg](http://wiki.vg/Authentication)
  * [Mojang API - wiki.vg](http://wiki.vg/Mojang_API)
