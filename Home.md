@@ -17,7 +17,9 @@
 
 该项目会对所有 API 作出详细说明，并且还会定义一些不属于 Yggdrasil 的 API 。这样做是为了最简化指定 Yggdrasil 服务的流程：只需要填写 Yggdrasil 服务对应的 URL ，就可以使用它。
 
-如果你是 Yggdrasil 服务端开发者或启动器开发者，或是对本项目感兴趣，请 Watch 本项目，以了解规范最新的发展。
+如果你是 Yggdrasil 服务端开发者或启动器开发者，或是对本项目感兴趣，请 Watch 本项目，以了解规范最新的发展
+
+> 开发者交流 QQ 群：926979364。欢迎启动器或皮肤站开发者加入。普通用户请勿加群，可能会听不懂。
 
 ## 相关项目
  * [yggdrasil-mock](https://github.com/yushijinhun/yggdrasil-mock)
