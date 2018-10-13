@@ -34,6 +34,7 @@
     - [按名称批量查询角色](#%E6%8C%89%E5%90%8D%E7%A7%B0%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2%E8%A7%92%E8%89%B2)
 - [扩展 API](#%E6%89%A9%E5%B1%95-api)
   - [服务端信息获取](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
+- [API 地址指示（ALI）](#api-%E5%9C%B0%E5%9D%80%E6%8C%87%E7%A4%BAali)
 - [参见](#%E5%8F%82%E8%A7%81)
 - [参考实现](#%E5%8F%82%E8%80%83%E5%AE%9E%E7%8E%B0)
 
@@ -700,6 +701,20 @@ Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.mine
     "signaturePublickey": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAnhEHrOIVm2ReCJIIR/1RHAHzkoJjpS8t\nIVfu+JWQKFd4SiVfc/Ym1T2rsmoWVtlppOcWYLSv3XVzpSJS1yk79p6cmASUPU9ENotFMCCi+sdT\nAVo/RKV7mxZHiz8g3H3JdegGMA1nEiYV5l9ue233d4/2MytXjKF8DVskkWZbfN6pRTiaCsRyjt40\nC3XhThBQzVIyjs75fpGNImjCvNlw2Dpy+AvdcLlT75hmGM8UBh8bkshNwBl0JDsE8SL9Qanen2Tk\noXVFoAMKoUsu1u0Kfwjzit52CutU2JXSSxp68KntcKA5d11520Vt51OvRGnNnOtMg6Qqgql56tAL\niy9HJAZpA1In6Kc6epK9vDH7AqZd9QRPBcTsGFdoO8MqegIJZK0zxQY4jCshO0Sxk/EAY5MdwBtB\nr/hGel5JkZByJqanZYV4dKlmNqTZk9hoakv1cb3e8ku2dXRgvtjJvkFayQFqQYpXgLX4ZIx1V87c\nHb1L5RGyAfB5y+UpPW+igMTRgIKN0OWHroTI9W+hSNFjAVj7XPWwp3vRBhdSABiOL7IHsk8e4VcE\nwiAuYGtRi8o/7IJpiZBBh1UkzQ/m1H7ohzjduvc0pYtp053YOx9Tmf0gj8U3dYNiE1gmfBDRnDwJ\nBxCKAYEv9g1uPC0yeJr7EN06Dbb6QQMA+CsbOSS50A0CAwEAAQ==\n-----END PUBLIC KEY-----\n"
 }
 ```
+
+# API 地址指示（ALI）
+API 地址指示（API Location Indication，简称 ALI）是一个 HTTP 响应头字段 `X-Authlib-Injector-API-Location`。ALI 的值为相对 URL 或绝对 URL，它指向与当前页面相关联的 Yggdrasil API。
+
+使用 ALI 后，用户只需输入一个与 Yggdrasil API 相关联的地址即可，不必输入真正的 API 地址。例如，`https://skin.example.com/api/yggdrasil/` 可以被简化为 `skin.example.com`。支持 ALI 的启动器会请求 `(https://)skin.example.com`，识别响应中的 ALI 头字段，并根据它找到真正的 API 地址。
+
+皮肤站可以在首页，或在全站启用 ALI。启用 ALI 的方法为在 HTTP 响应中添加 `X-Authlib-Injector-API-Location` 头字段，例如：
+```
+X-Authlib-Injector-API-Location: /api/yggdrasil/  # 使用相对 URL
+X-Authlib-Injector-API-Location: https://skin.example.com/api/yggdrasil/  # 亦可使用绝对 URL，支持跨域
+```
+
+当一个页面的 ALI 指向其本身时，这个 ALI 会被忽略。ALI 支持多次重定向（即 A 页面的 ALI 指向 B 页面，B 页面的 ALI 指向 C 页面），但重定向次数有限制（一般为 5 次）。
+
 
 # 参见
  * [Authentication - wiki.vg](http://wiki.vg/Authentication)
