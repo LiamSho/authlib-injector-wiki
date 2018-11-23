@@ -19,7 +19,7 @@
 
 如果你是 Yggdrasil 服务端开发者或启动器开发者，或是对本项目感兴趣，请 Watch 本项目，以了解规范最新的发展
 
-> 开发者交流 QQ 群：926979364。欢迎启动器或皮肤站开发者加入。普通用户请勿加群，可能会听不懂。
+> 开发者交流 QQ 群：926979364，Telegram 群：[@authlib_injector](https://t.me/authlib_injector)。欢迎启动器或皮肤站开发者加入。普通用户请勿加群，可能会听不懂。
 
 ## 相关项目
  * [yggdrasil-mock](https://github.com/yushijinhun/yggdrasil-mock)
