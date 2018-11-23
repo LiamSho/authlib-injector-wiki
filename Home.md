@@ -5,6 +5,7 @@
 
 - [简介](#%E7%AE%80%E4%BB%8B)
 - [相关项目](#%E7%9B%B8%E5%85%B3%E9%A1%B9%E7%9B%AE)
+- [捐助](#%E6%8D%90%E5%8A%A9)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -31,3 +32,6 @@
    * Blessing Skin 皮肤站的 Yggdrasil 插件
  * [HMCL](https://github.com/huanghongxun/HMCL)
    * HMCL v3 支持本规范
+
+## 捐助
+BMCLAPI 为 authlib-injector 提供了下载镜像站。如果您想要支持 authlib-injector 的开发，您可以[捐助 BMCLAPI](https://bmclapidoc.bangbang93.com/)。
