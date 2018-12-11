@@ -61,5 +61,3 @@ URL 中的 `{build_number}` 参数代表版本构建号。
 > 使用 BMCLAPI 时请遵守 [BMCLAPI 的协议](https://bmclapidoc.bangbang93.com/#api-_)。
 
 BMCLAPI 为本下载 API 提供了一个[镜像](https://bmclapidoc.bangbang93.com/#api-Mirrors-Mirrors_authlib_injector)，其入口为 [`https://bmclapi2.bangbang93.com/mirrors/authlib-injector/`](https://bmclapi2.bangbang93.com/mirrors/authlib-injector/)。
-
-需要注意的是，返回的版本信息中，`download_url` 依然指向源站（`authlib-injector.yushi.moe`）。你需要将其中的 `https://authlib-injector.yushi.moe/` 替换为 `https://bmclapi2.bangbang93.com/mirrors/authlib-injector/`。
