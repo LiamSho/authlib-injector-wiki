@@ -51,7 +51,7 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 如果使用 BungeeCord，那么在所有服务端上都需要加载 authlib-injector（[方法见上](#原版服务端spigot-等)），但应只有 BungeeCord 打开 `online-mode`，其它服务端应关闭 `online-mode`。
 
 ## 调用 Mojang 皮肤
-> 此功能要求服务端和客户端的 authlib-injector 版本均满足 >=1.1.24（尚未发布）。
+> 此功能要求服务端和客户端的 authlib-injector 版本均满足 >=1.1.24。
 
 加载 authlib-injector 后，所有皮肤默认都是从指定的验证服务器处获取的。例如：
 * `/give @p minecraft:skull 1 3 {SkullOwner:"notch"}`
