@@ -69,4 +69,5 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 |受影响的插件 / Mod|受影响的 authlib-injector 版本|备注|
 |----|---|----|
 |Citizens2|<=1.1.23|[#27](https://github.com/yushijinhun/authlib-injector/issues/27) [#28](https://github.com/yushijinhun/authlib-injector/pull/28)|
+|LaunchWrapper|=1.1.24|[#33](https://github.com/yushijinhun/authlib-injector/issues/33)|
 
