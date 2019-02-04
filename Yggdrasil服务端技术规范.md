@@ -472,9 +472,11 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 
 当指定 `clientToken` 时，服务端应检查 `accessToken` 和 `clientToken` 是否有效，否则只需要检查 `accessToken`。
 
-颁发的新令牌的 `clientToken` 应与原令牌的相同。`selectedProfile` 只有在原令牌绑定的角色为空时才能包含，新令牌应绑定到该项目指定的角色上。
+颁发的新令牌的 `clientToken` 应与原令牌的相同。
 
-该操作在令牌暂时失效时依然可以执行。若请求失败，原令牌依然有效。
+如果请求中包含 `selectedProfile`，那么这就是一个选择角色的操作。此操作要求原令牌所绑定的角色为空，而新令牌则将绑定到 `selectedProfile` 所指定的角色上。如果不包含 `selectedProfile`，那么新令牌所绑定的角色和原令牌相同。
+
+刷新操作在令牌暂时失效时依然可以执行。若请求失败，原令牌依然有效。
 
 响应格式：
 ```javascript
