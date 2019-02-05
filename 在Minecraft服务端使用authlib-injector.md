@@ -82,4 +82,4 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 |----|---|----|
 |Citizens2|<=1.1.23|[#27](https://github.com/yushijinhun/authlib-injector/issues/27) [#28](https://github.com/yushijinhun/authlib-injector/pull/28)|
 |LaunchWrapper|=1.1.24|[#33](https://github.com/yushijinhun/authlib-injector/issues/33)|
-
+|ModLauncher|1.1.24, 1.1.25|[#38](https://github.com/yushijinhun/authlib-injector/pull/38)
