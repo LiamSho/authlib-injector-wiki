@@ -7,7 +7,6 @@
 - [原版服务端、Spigot 等](#%E5%8E%9F%E7%89%88%E6%9C%8D%E5%8A%A1%E7%AB%AFspigot-%E7%AD%89)
 - [BungeeCord](#bungeecord)
 - [调用 Mojang 皮肤](#%E8%B0%83%E7%94%A8-mojang-%E7%9A%AE%E8%82%A4)
-  - [通过代理访问 Mojang](#%E9%80%9A%E8%BF%87%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AE-mojang)
 - [插件 / Mod 兼容性](#%E6%8F%92%E4%BB%B6--mod-%E5%85%BC%E5%AE%B9%E6%80%A7)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -63,17 +62,6 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 如果要使用 Mojang 的皮肤，则可以在角色名称后加上 `@mojang`，如：
 * `/give @p minecraft:skull 1 3 {SkullOwner:"notch@mojang"}`
 * `/npc skin notch@mojang`
-
-### 通过代理访问 Mojang
-> 代理功能要求服务端的 authlib-injector 版本 >=1.1.26
-
-调用 Mojang 皮肤的功能需要 MC 服务端能够访问 Mojang API。如果你的服务端要通过代理才能访问 Mojang，那么你可以在启动时添加以下 **JVM 参数**来指定代理：
-```
--Dauthlibinjector.mojang.proxy=socks://<host>:<port>
-```
-注意：
-* 只有向 Mojang 查询角色信息时才会使用此代理，材质图像下载不走代理（即使是来自 Mojang 的材质）。
-* 目前仅支持 SOCKS5。
 
 ## 插件 / Mod 兼容性
 一般而言，authlib-injector 兼容绝大多数插件和 Mod。下表列出的是（曾经）存在兼容性问题的插件 / Mod：
