@@ -368,7 +368,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
  * 绑定的角色
  * 颁发时间
 
-其中 `accessToken` 和 `clientToken` 为无符号 UUID。`accessToken` 由服务端随机生成，`clientToken` 由客户端提供。
+其中 `accessToken` 和 `clientToken` 为任意字符串，推荐使用无符号UUID或JWT。`accessToken` 由服务端随机生成，`clientToken` 由客户端提供。
 
 介于 `accessToken` 的随机性，它可以被作为主键。而 `clientToken` 不具有唯一性。
 
