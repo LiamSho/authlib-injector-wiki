@@ -31,7 +31,9 @@
  * [Yggdrasil API for Blessing Skin](https://github.com/printempw/yggdrasil-api)
    * Blessing Skin 皮肤站的 Yggdrasil 插件
  * [HMCL](https://github.com/huanghongxun/HMCL)
-   * HMCL v3 支持本规范
+   * HMCL v3.x 支持 authlib-injector
+ * [BakaXL](https://www.bakaxl.com/)
+   * BakaXL 3.0 支持 authlib-injector
  * [LaunchHelper](https://github.com/Codex-in-somnio/LaunchHelper)
    * 想在Multicraft面板服上使用authlib-injector，可以尝试本项目
 
