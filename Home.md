@@ -35,7 +35,7 @@
  * [BakaXL](https://www.bakaxl.com/)
    * BakaXL 3.0 支持 authlib-injector
  * [LaunchHelper](https://github.com/Codex-in-somnio/LaunchHelper)
-   * 想在Multicraft面板服上使用authlib-injector，可以尝试本项目
+   * 想在 Multicraft 面板服上使用 authlib-injector，可以尝试本项目
 
 ## 捐助
 BMCLAPI 为 authlib-injector 提供了下载镜像站。如果您想要支持 authlib-injector 的开发，您可以[捐助 BMCLAPI](https://bmclapidoc.bangbang93.com/)。
