@@ -32,8 +32,6 @@
   - [角色部分](#%E8%A7%92%E8%89%B2%E9%83%A8%E5%88%86)
     - [查询角色属性](#%E6%9F%A5%E8%AF%A2%E8%A7%92%E8%89%B2%E5%B1%9E%E6%80%A7)
     - [按名称批量查询角色](#%E6%8C%89%E5%90%8D%E7%A7%B0%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2%E8%A7%92%E8%89%B2)
-    - [按名称查询单个角色](#%E6%8C%89%E5%90%8D%E7%A7%B0%E6%9F%A5%E8%AF%A2%E5%8D%95%E4%B8%AA%E8%A7%92%E8%89%B2)
-    - [查询角色历史名称](#%E6%9F%A5%E8%AF%A2%E8%A7%92%E8%89%B2%E5%8E%86%E5%8F%B2%E5%90%8D%E7%A7%B0)
 - [扩展 API](#%E6%89%A9%E5%B1%95-api)
   - [服务端信息获取](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
 - [API 地址指示（ALI）](#api-%E5%9C%B0%E5%9D%80%E6%8C%87%E7%A4%BAali)
@@ -99,7 +97,7 @@
 
 #### 用户信息的序列化
 用户信息序列化后符合以下格式：
-```json5
+```javascript
 {
 	"id":"用户的 ID",
 	"properties":[ // 用户的属性（数组，每一元素为一个属性）
@@ -151,7 +149,7 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 
 #### 角色信息的序列化
 角色信息序列化后符合以下格式：
-```json5
+```javascript
 {
 	"id":"角色 UUID（无符号）",
 	"name":"角色名称",
@@ -171,7 +169,7 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 `signature` 是一个 Base64 字符串，其中包含属性值（使用 UTF-8 编码）的数字签名（使用 SHA1withRSA 算法，见 [PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见 [签名密钥对](https://github.com/yushijinhun/authlib-injector/wiki/%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E5%AF%B9)。
 
 角色属性中目前已知的键有 `textures`（并不一定会包含）。它对应的值是一个 Base64 字符串，内容为 JSON 字符串，包含角色的材质信息，格式如下：
-```json5
+```javascript
 {
 	"timestamp":该属性值被生成时的时间戳（Java 时间戳格式，即自 1970-01-01 00:00:00 UTC 至今经过的毫秒数）,
 	"profileId":"角色 UUID（无符号）",
@@ -419,7 +417,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 使用邮箱和密码进行身份验证，并分配一个新的令牌。
 
 请求格式：
-```json5
+```javascript
 {
 	"username":"邮箱",
 	"password":"密码",
@@ -437,7 +435,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 对于令牌要绑定的角色：若用户没有任何角色，则为空；若用户仅有一个角色，那么通常绑定到该角色；若用户有多个角色，通常为空，以便客户端进行选择。也就是说如果绑定的角色为空，则需要客户端进行角色选择。
 
 响应格式：
-```json5
+```javascript
 {
 	"accessToken":"令牌的 accessToken",
 	"clientToken":"令牌的 clientToken",
@@ -461,7 +459,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 吊销原令牌，并颁发一个新的令牌。
 
 请求格式：
-```json5
+```javascript
 {
 	"accessToken":"令牌的 accessToken",
 	"clientToken":"令牌的 clientToken（可选）",
@@ -481,7 +479,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 刷新操作在令牌暂时失效时依然可以执行。若请求失败，原令牌依然有效。
 
 响应格式：
-```json5
+```javascript
 {
 	"accessToken":"新令牌的 accessToken",
 	"clientToken":"新令牌的 clientToken",
@@ -500,7 +498,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 检验令牌是否有效。
 
 请求格式：
-```json5
+```javascript
 {
 	"accessToken":"令牌的 accessToken",
 	"clientToken":"令牌的 clientToken（可选）"
@@ -517,7 +515,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 吊销给定令牌。
 
 请求格式：
-```json5
+```javascript
 {
 	"accessToken":"令牌的 accessToken",
 	"clientToken":"令牌的 clientToken（可选）"
@@ -534,7 +532,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 吊销用户的所有令牌。
 
 请求格式：
-```json5
+```javascript
 {
 	"username":"邮箱",
 	"password":"密码"
@@ -562,7 +560,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 记录服务端发送给客户端的 `serverId`，以备服务端检查。
 
 请求格式：
-```json5
+```javascript
 {
 	"accessToken":"令牌的 accessToken",
 	"selectedProfile":"该令牌绑定的角色的 UUID（无符号）",
@@ -600,7 +598,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 若 `ip` 参数存在，仅当其值与先前发送[进入服务器请求](#客户端进入服务器)的客户端 IP 相同时，操作才成功。
 
 响应格式：
-```json5
+```javascript
 {
 	// ... 令牌所绑定角色的完整信息（包含角色属性及数字签名，格式见 §角色信息的序列化）
 }
@@ -624,7 +622,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 |unsigned _（可选）_|`true` 或 `false`。是否在响应中**不包含**数字签名，默认为 `true`|
 
 响应格式：
-```json5
+```javascript
 {
 	// ... 角色信息（包含角色属性。若 unsigned 为 false，还需要包含数字签名。格式见 §角色信息的序列化）
 }
@@ -638,7 +636,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 批量查询角色名称所对应的角色。
 
 请求格式：
-```json5
+```javascript
 [
 	"角色名称"
 	// ,... 还可以有更多
@@ -648,7 +646,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 服务端查询各个角色名称所对应的角色信息，并将其包含在响应中。不存在的角色不需要包含。响应中角色信息的先后次序无要求。
 
 响应格式：
-```json5
+```javascript
 [
 	{
 		// 角色信息（注意：不包含角色属性。格式见 §角色信息的序列化）
@@ -659,61 +657,6 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 
 **安全提示：** 为防止 CC 攻击，需要为单次查询的角色数目设置最大值，该值至少为 2。
 
-### 按名称查询单个角色
-`GET /api/users/profiles/minecraft/{username}?at={timestamp}`
-
-按名称查询角色在某个时间戳的信息
-
-|参数|值|
-|----|--|
-|username|角色名字\(无大小写匹配\)|
-|timestamp _（可选）_|UNIX时间戳 \(没有毫秒\)|
-
-响应格式：
-```json5
-{
-	// 角色信息（注意：不包含角色属性。格式见 §角色信息的序列化）
-}
-```
-
-若角色不存在，服务端应返回 HTTP 状态 `204 No Content`。
-
-如果timestamp不存在，那么使用当前时间。
-
-如果timestamp无效, 那么服务器返回异常
-```json5
-// HTTP/1.1 400 Bad Request
-{
-  "error": "IllegalArgumentException",
-  "errorMessage": "Invalid timestamp."
-}
-```
-
-### 查询角色历史名称
-`GET /api/user/profiles/{uuid}/names`
-返回某个角色的历史名称 (包含当前名称)
-|参数|值|
-|----|--|
-|uuid|角色UUID\(无符号\)|
-
-
-响应格式：
-```json5
-[
-  {
-    "name": "角色当前名称"
-  },
-  {
-    "name": "角色历史名称",
-    "changedToAt": 1414059749000
-  }
-  //...
-]
-```
-其中 `changedToAt` 是 Java 时间戳 (包含毫秒)
-
-若角色不存在，服务端应返回 HTTP 状态 `204 No Content`。
-
 # 扩展 API
 以下 API 并不属于 Yggdrasil，它们是为了方便 authlib-injector 进行自动配置而设计的。
 
@@ -721,7 +664,7 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
 `GET /`
 
 响应格式：
-```json5
+```javascript
 {
 	"meta":{
 		// 服务端的元数据，内容任意
@@ -747,7 +690,7 @@ Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.mine
 |implementationVersion|服务端实现的版本|
 
 下面给出一段响应的示例：
-```json5
+```javascript
 {
     "meta": {
         "implementationName": "yggdrasil-mock-server",
