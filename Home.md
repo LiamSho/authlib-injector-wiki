@@ -28,7 +28,7 @@
    * 基于此项目的 Yggdrasil 服务端演示站点：[example.yggdrasil.yushi.moe](https://github.com/yushijinhun/yggdrasil-mock/wiki/演示站点)
  * [BMCLAPI](https://bmclapidoc.bangbang93.com/#api-Mirrors-Mirrors_authlib_injector)
    * BMCLAPI 为 authlib-injector 下载提供了一个镜像
- * [Yggdrasil API for Blessing Skin](https://github.com/printempw/yggdrasil-api)
+ * [Yggdrasil API for Blessing Skin](https://blessing.netlify.app/yggdrasil-api/)
    * Blessing Skin 皮肤站的 Yggdrasil 插件
  * [HMCL](https://github.com/huanghongxun/HMCL)
    * HMCL v3.x 支持 authlib-injector
