@@ -122,8 +122,9 @@
 角色与账号为多对一关系。一个角色对应 Minecraft 中的一个实体玩家。角色具有以下属性：
  * UUID
  * 名称
- * 材质模型
-   * 可选值：STEVE、ALEX
+ * 材质模型，可选值有：`default`、`slim`
+   * **default**：正常手臂宽度（4px）的皮肤
+   * **slim**：细手臂（3px）的皮肤
  * 材质
    * 类型为映射
    * key 可选值有：SKIN、CAPE
@@ -186,8 +187,7 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 	}
 }
 ```
-材质元数据中目前已知的键有 `model`。
-`model` 只出现在 `SKIN` 材质中，用于表示该角色的模型。它的值可以为 `default` 或 `slim` ，其中 `default` 代表 STEVE，`slim` 代表 ALEX。
+材质元数据中目前已知的键有 `model`，其对应该角色的材质模型，取值为 `default` 或 `slim`。
 
 #### 材质 URL 规范
 Minecraft 将材质 hash 作为材质的标识。每当客户端下载一个材质后，便会将其缓存在本地，以后若需要相同 hash 的材质，则会直接使用缓存。
