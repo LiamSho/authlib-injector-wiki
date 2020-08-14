@@ -707,7 +707,7 @@ Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.mine
 ```
 
 # API 地址指示（ALI）
-API 地址指示（API Location Indication，简称 ALI）是一个 HTTP 响应头字段 `X-Authlib-Injector-API-Location`。ALI 的值为相对 URL 或绝对 URL，它指向与当前页面相关联的 Yggdrasil API。
+API 地址指示（API Location Indication，简称 ALI）是一个 HTTP 响应头字段 `X-Authlib-Injector-API-Location`，起到服务发现的作用。ALI 的值为相对 URL 或绝对 URL，它指向与当前页面相关联的 Yggdrasil API。
 
 使用 ALI 后，用户只需输入一个与 Yggdrasil API 相关联的地址即可，不必输入真正的 API 地址。例如，`https://skin.example.com/api/yggdrasil/` 可以被简化为 `skin.example.com`。支持 ALI 的启动器会请求 `(https://)skin.example.com`，识别响应中的 ALI 头字段，并根据它找到真正的 API 地址。
 
@@ -717,7 +717,7 @@ X-Authlib-Injector-API-Location: /api/yggdrasil/  # 使用相对 URL
 X-Authlib-Injector-API-Location: https://skin.example.com/api/yggdrasil/  # 亦可使用绝对 URL，支持跨域
 ```
 
-当一个页面的 ALI 指向其本身时，这个 ALI 会被忽略。ALI 支持多次重定向（即 A 页面的 ALI 指向 B 页面，B 页面的 ALI 指向 C 页面），但重定向次数有限制（一般为 5 次）。
+当一个页面的 ALI 指向其本身时，这个 ALI 会被忽略。
 
 
 # 参见
