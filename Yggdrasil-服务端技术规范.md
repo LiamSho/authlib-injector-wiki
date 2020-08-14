@@ -35,6 +35,10 @@
     - [按名称批量查询角色](#%E6%8C%89%E5%90%8D%E7%A7%B0%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2%E8%A7%92%E8%89%B2)
 - [扩展 API](#%E6%89%A9%E5%B1%95-api)
   - [API 元数据获取](#api-%E5%85%83%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96)
+    - [`meta` 中的元数据](#meta-%E4%B8%AD%E7%9A%84%E5%85%83%E6%95%B0%E6%8D%AE)
+      - [服务端基本信息](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF)
+      - [服务器网址](#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E5%9D%80)
+    - [响应示例](#%E5%93%8D%E5%BA%94%E7%A4%BA%E4%BE%8B)
 - [API 地址指示（ALI）](#api-%E5%9C%B0%E5%9D%80%E6%8C%87%E7%A4%BAali)
 - [参见](#%E5%8F%82%E8%A7%81)
 - [参考实现](#%E5%8F%82%E8%80%83%E5%AE%9E%E7%8E%B0)
@@ -683,24 +687,39 @@ Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.mine
 
 `signaturePublickey` 是 PEM 格式的公钥，用于验证角色属性的数字签名。其以 `-----BEGIN PUBLIC KEY-----` 开头，以 `-----END PUBLIC KEY-----` 结尾，中间允许出现换行符，但不允许出现其他空白字符（亦允许文末出现换行符）。
 
-尽管 `meta` 中内容没有强制要求，但我们建议您包含以下属性：
+### `meta` 中的元数据
+`meta` 中的内容没有强制要求，以下字段均为可选。
 
+#### 服务端基本信息
 |Key|Value|
 |---|-----|
 |serverName|服务器名称|
 |implementationName|服务端实现的名称|
 |implementationVersion|服务端实现的版本|
 
-下面给出一段响应的示例：
+#### 服务器网址
+如果您需要在启动器中展示验证服务器首页地址、注册页面地址等信息，您可以在 `meta` 中添加一个 `links` 字段。
+
+`links` 字段的类型是对象，其中可以包含：
+|Key|Value|
+|---|-----|
+|homepage|验证服务器首页地址|
+|register|注册页面地址|
+
+### 响应示例
 ```javascript
 {
     "meta": {
         "implementationName": "yggdrasil-mock-server",
-        "implementationVersion": "0.0.1-SNAPSHOT-e60f4d5",
-        "serverName": "yushijinhun's Yggdrasil Example Server"
+        "implementationVersion": "0.0.1",
+        "serverName": "yushijinhun's Example Authentication Server",
+        "links": {
+            "homepage": "https://skin.example.com/",
+            "register": "https://skin.example.com/register"
+        }
     },
     "skinDomains": [
-        ".yushi.moe"
+        ".example.com"
     ],
     "signaturePublickey": "-----BEGIN PUBLIC KEY-----\nMIICIj...（省略）...EAAQ==\n-----END PUBLIC KEY-----\n"
 }
