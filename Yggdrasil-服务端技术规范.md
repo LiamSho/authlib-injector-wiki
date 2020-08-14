@@ -34,7 +34,7 @@
     - [查询角色属性](#%E6%9F%A5%E8%AF%A2%E8%A7%92%E8%89%B2%E5%B1%9E%E6%80%A7)
     - [按名称批量查询角色](#%E6%8C%89%E5%90%8D%E7%A7%B0%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2%E8%A7%92%E8%89%B2)
 - [扩展 API](#%E6%89%A9%E5%B1%95-api)
-  - [服务端信息获取](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
+  - [API 元数据获取](#api-%E5%85%83%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96)
 - [API 地址指示（ALI）](#api-%E5%9C%B0%E5%9D%80%E6%8C%87%E7%A4%BAali)
 - [参见](#%E5%8F%82%E8%A7%81)
 - [参考实现](#%E5%8F%82%E8%80%83%E5%AE%9E%E7%8E%B0)
@@ -660,9 +660,9 @@ Mojang 之所以这么做，可能是为了防止用户多地同时登录（仅�
 **安全提示：** 为防止 CC 攻击，需要为单次查询的角色数目设置最大值，该值至少为 2。
 
 # 扩展 API
-以下 API 并不属于 Yggdrasil，它们是为了方便 authlib-injector 进行自动配置而设计的。
+以下 API 是为了方便 authlib-injector 进行自动配置而设计的。
 
-## 服务端信息获取
+## API 元数据获取
 `GET /`
 
 响应格式：
@@ -702,7 +702,7 @@ Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.mine
     "skinDomains": [
         ".yushi.moe"
     ],
-    "signaturePublickey": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAnhEHrOIVm2ReCJIIR/1RHAHzkoJjpS8t\nIVfu+JWQKFd4SiVfc/Ym1T2rsmoWVtlppOcWYLSv3XVzpSJS1yk79p6cmASUPU9ENotFMCCi+sdT\nAVo/RKV7mxZHiz8g3H3JdegGMA1nEiYV5l9ue233d4/2MytXjKF8DVskkWZbfN6pRTiaCsRyjt40\nC3XhThBQzVIyjs75fpGNImjCvNlw2Dpy+AvdcLlT75hmGM8UBh8bkshNwBl0JDsE8SL9Qanen2Tk\noXVFoAMKoUsu1u0Kfwjzit52CutU2JXSSxp68KntcKA5d11520Vt51OvRGnNnOtMg6Qqgql56tAL\niy9HJAZpA1In6Kc6epK9vDH7AqZd9QRPBcTsGFdoO8MqegIJZK0zxQY4jCshO0Sxk/EAY5MdwBtB\nr/hGel5JkZByJqanZYV4dKlmNqTZk9hoakv1cb3e8ku2dXRgvtjJvkFayQFqQYpXgLX4ZIx1V87c\nHb1L5RGyAfB5y+UpPW+igMTRgIKN0OWHroTI9W+hSNFjAVj7XPWwp3vRBhdSABiOL7IHsk8e4VcE\nwiAuYGtRi8o/7IJpiZBBh1UkzQ/m1H7ohzjduvc0pYtp053YOx9Tmf0gj8U3dYNiE1gmfBDRnDwJ\nBxCKAYEv9g1uPC0yeJr7EN06Dbb6QQMA+CsbOSS50A0CAwEAAQ==\n-----END PUBLIC KEY-----\n"
+    "signaturePublickey": "-----BEGIN PUBLIC KEY-----\nMIICIj...（省略）...EAAQ==\n-----END PUBLIC KEY-----\n"
 }
 ```
 
