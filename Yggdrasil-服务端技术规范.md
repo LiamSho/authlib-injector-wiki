@@ -383,6 +383,8 @@ console.info(computeTextureHash(PNG.sync.read(fs.readFileSync("texture-hash-test
    * 新颁发的令牌（即通过[登录](#登录)、[刷新](#刷新)颁发的令牌）处于该状态。
  * **暂时失效**
    * 处于该状态的令牌除了进行[刷新操作](#刷新)外，无权进行任何操作。
+   * 当令牌绑定的角色改名后，令牌应被标记为**暂时失效**状态。
+     * 这是为了让启动器刷新令牌，从而获取到新的角色名称。（见 [#40](https://github.com/yushijinhun/authlib-injector/issues/40)）
    * _该状态并不是必须要实现的（详细介绍见下）。_
  * **无效**
    * 处于该状态的令牌无权进行任何操作。
