@@ -38,6 +38,7 @@
     - [`meta` 中的元数据](#meta-%E4%B8%AD%E7%9A%84%E5%85%83%E6%95%B0%E6%8D%AE)
       - [服务端基本信息](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF)
       - [服务器网址](#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E5%9D%80)
+      - [功能选项](#%E5%8A%9F%E8%83%BD%E9%80%89%E9%A1%B9)
     - [响应示例](#%E5%93%8D%E5%BA%94%E7%A4%BA%E4%BE%8B)
 - [API 地址指示（ALI）](#api-%E5%9C%B0%E5%9D%80%E6%8C%87%E7%A4%BAali)
 - [参见](#%E5%8F%82%E8%A7%81)
@@ -705,6 +706,13 @@ Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.mine
 |---|-----|
 |homepage|验证服务器首页地址|
 |register|注册页面地址|
+
+#### 功能选项
+> **注意：** 一般情况下，不需要设置以下字段。
+
+|Key|Value|
+|---|-----|
+|feature.legacy\_skin\_api|布尔值，指示验证服务器是否支持旧式皮肤 API，即 `GET /skins/MinecraftSkins/{username}.png`。<br>当未指定或值为 false 时，authlib-injector 会使用内建的 HTTP 服务器在本地处理对该 API 的请求；若值为 true，请求将由验证服务器处理。|
 
 ### 响应示例
 ```javascript
