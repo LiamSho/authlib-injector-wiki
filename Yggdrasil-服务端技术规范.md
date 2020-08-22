@@ -712,8 +712,8 @@ Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.mine
 
 |Key|Value|
 |---|-----|
-|feature.legacy\_skin\_api|布尔值，指示验证服务器是否支持旧式皮肤 API，即 `GET /skins/MinecraftSkins/{username}.png`。<br>当未指定或值为 false 时，authlib-injector 会使用内建的 HTTP 服务器在本地处理对该 API 的请求；若值为 true，请求将由验证服务器处理。<br>详情见 [README § 参数]|
-|feature.no\_mojang\_namespace|布尔值，是否禁用 authlib-injector 的 Mojang 命名空间（@mojang 后缀）功能，默认为 false。<br>详情见 [README § 参数]|
+|feature.legacy\_skin\_api|布尔值，指示验证服务器是否支持旧式皮肤 API，即 `GET /skins/MinecraftSkins/{username}.png`。<br>当未指定或值为 false 时，authlib-injector 会使用内建的 HTTP 服务器在本地处理对该 API 的请求；若值为 true，请求将由验证服务器处理。<br>详情见 [README § 参数] 中的 `-Dauthlibinjector.legacySkinPolyfill` 选项。|
+|feature.no\_mojang\_namespace|布尔值，是否禁用 authlib-injector 的 Mojang 命名空间（@mojang 后缀）功能，默认为 false。<br>详情见 [README § 参数] 中的 `-Dauthlibinjector.mojangNamespace` 选项。|
 
 [README § 参数]: https://github.com/yushijinhun/authlib-injector#%E5%8F%82%E6%95%B0
 

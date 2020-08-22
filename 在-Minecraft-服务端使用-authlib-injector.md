@@ -27,7 +27,7 @@
 ```
 
 - `{path/to/authlib-injector.jar}` 表示你在[上一步](#获取-authlib-injector)中下载的 JAR 文件所在的位置（相对路径、绝对路径皆可）。
-- `{https://your-yggdrasil-api-root.com}` 表示你的 Yggdrasil 服务端的 API Root。
+- `{https://your-yggdrasil-api-root.com}` 表示验证服务器的 URL。
 
 例如，这是原先的启动命令：
 
@@ -39,7 +39,7 @@ java -jar minecraft_server.1.12.2.jar nogui
 
 - 你下载到的 authlib-injector JAR 文件名为 `authlib-injector.jar`。
 - 你将其放到了与服务端 JAR `minecraft_server.1.12.2.jar` 相同的目录下。
-- 你的 Yggdrasil 服务端 API Root 为 `https://example.yggdrasil.yushi.moe`。
+- 验证服务器的 URL 为 `https://example.yggdrasil.yushi.moe`。
 
 那么添加参数后的命令行应该如下：
 
@@ -48,28 +48,25 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 ```
 
 ## BungeeCord
-
-如果使用 BungeeCord，那么在所有服务端上都需要加载 authlib-injector（[方法见上](#原版服务端spigot-等)），但应只有 BungeeCord 打开 `online-mode`，其它服务端应关闭 `online-mode`。
+如果使用 BungeeCord，那么在所有服务端上都需要加载 authlib-injector（[方法见上](#原版服务端spigot-等)），但应只有 BungeeCord 打开 `online-mode`，后端 MC 服务端应关闭 `online-mode`。
 
 ## 调用 Mojang 皮肤
-> 此功能要求服务端和客户端的 authlib-injector 版本均满足 >=1.1.24。
-
 加载 authlib-injector 后，所有皮肤默认都是从指定的验证服务器处获取的。例如：
 * `/give @p minecraft:skull 1 3 {SkullOwner:"notch"}`
 * （Citizens2 插件）`/npc skin notch`
 
-这些命令获取的都是**验证服务器上**名为 `notch` 的角色的皮肤。
+这些命令获取的都是**自定义的验证服务器上**名为 `notch` 的角色的皮肤。
 
 如果要使用 Mojang 的皮肤，则可以在角色名称后加上 `@mojang`，如：
 * `/give @p minecraft:skull 1 3 {SkullOwner:"notch@mojang"}`
 * `/npc skin notch@mojang`
 
-### 通过代理访问 Mojang
-> 代理功能要求服务端的 authlib-injector 版本 >=1.1.26
+详细说明见 [README § 参数](https://github.com/yushijinhun/authlib-injector#%E5%8F%82%E6%95%B0) 中的 `-Dauthlibinjector.mojangNamespace` 选项。
 
+### 通过代理访问 Mojang
 调用 Mojang 皮肤的功能需要 MC 服务端能够访问 Mojang API。如果你的服务端要通过代理才能访问 Mojang，那么你可以在启动时添加以下 **JVM 参数**来指定代理：
 ```
--Dauthlibinjector.mojang.proxy=socks://<host>:<port>
+-Dauthlibinjector.mojangProxy=socks://<host>:<port>
 ```
 注意：
 * 只有向 Mojang 查询角色信息时才会使用此代理，材质图像下载不走代理（即使是来自 Mojang 的材质）。
@@ -78,8 +75,9 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 ## 插件 / Mod 兼容性
 一般而言，authlib-injector 兼容绝大多数插件和 Mod。下表列出的是（曾经）存在兼容性问题的插件 / Mod：
 
-|受影响的插件 / Mod|受影响的 authlib-injector 版本|备注|
+|受影响的插件 / Mod / 服务端|受影响的 authlib-injector 版本|备注|
 |----|---|----|
 |Citizens2|<=1.1.23|[#27](https://github.com/yushijinhun/authlib-injector/issues/27) [#28](https://github.com/yushijinhun/authlib-injector/pull/28)|
 |LaunchWrapper|=1.1.24|[#33](https://github.com/yushijinhun/authlib-injector/issues/33)|
-|ModLauncher|1.1.24, 1.1.25|[#38](https://github.com/yushijinhun/authlib-injector/pull/38)
+|ModLauncher|1.1.24, 1.1.25|[#38](https://github.com/yushijinhun/authlib-injector/pull/38)|
+|Arclight|<=1.1.30|[#80](https://github.com/yushijinhun/authlib-injector/issues/80)|
