@@ -16,7 +16,7 @@
 
 ## 获取 authlib-injector
 
-首先你需要从[此处](https://authlib-injector.yushi.moe/~download/)下载最新版本的 authlib-injector。
+首先你需要从[此处](https://authlib-injector.yushi.moe/)下载最新版本的 authlib-injector。
 
 ## 原版服务端、Spigot 等
 

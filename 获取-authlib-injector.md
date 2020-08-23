@@ -13,7 +13,7 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # 手动下载
-authlib-injector 的最新版本可以直接从 [`https://authlib-injector.yushi.moe/~download`](https://authlib-injector.yushi.moe/~download/) 下载。
+authlib-injector 的最新版本可以直接从 [`https://authlib-injector.yushi.moe/`](https://authlib-injector.yushi.moe/) 下载。
 
 # 下载 API
 authlib-injector 项目提供了一组 API 用于下载 authlib-injector 构件。其 API 入口为 [`https://authlib-injector.yushi.moe/`](https://authlib-injector.yushi.moe/)。
