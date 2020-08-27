@@ -73,7 +73,7 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 * 目前仅支持 SOCKS5。
 
 ## 插件 / Mod 兼容性
-一般而言，authlib-injector 兼容绝大多数插件和 Mod。下表列出的是（曾经）存在兼容性问题的插件 / Mod：
+一般而言，authlib-injector 兼容绝大多数插件和 Mod。下表列出的是（曾经）存在兼容性问题的插件 / Mod / 服务端：
 
 |受影响的插件 / Mod / 服务端|受影响的 authlib-injector 版本|备注|
 |----|---|----|
@@ -81,3 +81,4 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 |LaunchWrapper|=1.1.24|[#33](https://github.com/yushijinhun/authlib-injector/issues/33)|
 |ModLauncher|1.1.24, 1.1.25|[#38](https://github.com/yushijinhun/authlib-injector/pull/38)|
 |Arclight|<=1.1.30|[#80](https://github.com/yushijinhun/authlib-injector/issues/80)|
+|Geyser|<=1.1.31|[#83](https://github.com/yushijinhun/authlib-injector/issues/83)|
