@@ -8,7 +8,7 @@
 - [BungeeCord](#bungeecord)
 - [调用 Mojang 皮肤](#%E8%B0%83%E7%94%A8-mojang-%E7%9A%AE%E8%82%A4)
   - [通过代理访问 Mojang](#%E9%80%9A%E8%BF%87%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AE-mojang)
-- [插件 / Mod 兼容性](#%E6%8F%92%E4%BB%B6--mod-%E5%85%BC%E5%AE%B9%E6%80%A7)
+- [兼容性](#%E5%85%BC%E5%AE%B9%E6%80%A7)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -72,7 +72,7 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 * 只有向 Mojang 查询角色信息时才会使用此代理，材质图像下载不走代理（即使是来自 Mojang 的材质）。
 * 目前仅支持 SOCKS5。
 
-## 插件 / Mod 兼容性
+## 兼容性
 一般而言，authlib-injector 兼容绝大多数插件和 Mod。下表列出的是（曾经）存在兼容性问题的插件 / Mod / 服务端：
 
 |受影响的插件 / Mod / 服务端|受影响的 authlib-injector 版本|备注|
@@ -81,4 +81,4 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 |LaunchWrapper|=1.1.24|[#33](https://github.com/yushijinhun/authlib-injector/issues/33)|
 |ModLauncher|1.1.24, 1.1.25|[#38](https://github.com/yushijinhun/authlib-injector/pull/38)|
 |Arclight|<=1.1.30|[#80](https://github.com/yushijinhun/authlib-injector/issues/80)|
-|Geyser|<=1.1.31|[#83](https://github.com/yushijinhun/authlib-injector/issues/83)|
+|Geyser (plugin)|<=1.1.31|[#83](https://github.com/yushijinhun/authlib-injector/issues/83)|
