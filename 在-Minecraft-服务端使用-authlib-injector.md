@@ -61,7 +61,7 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 * `/give @p minecraft:skull 1 3 {SkullOwner:"notch@mojang"}`
 * `/npc skin notch@mojang`
 
-详细说明见 [README § 参数](https://github.com/yushijinhun/authlib-injector#%E5%8F%82%E6%95%B0) 中的 `-Dauthlibinjector.mojangNamespace` 选项。
+详细说明见 [README § 参数](https://github.com/yushijinhun/authlib-injector#参数) 中的 `-Dauthlibinjector.mojangNamespace` 选项。
 
 ### 通过代理访问 Mojang
 调用 Mojang 皮肤的功能需要 MC 服务端能够访问 Mojang API。如果你的服务端要通过代理才能访问 Mojang，那么你可以在启动时添加以下 **JVM 参数**来指定代理：

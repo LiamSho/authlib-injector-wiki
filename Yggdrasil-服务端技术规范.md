@@ -174,7 +174,7 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 
 角色属性（`properties`）及数字签名（`signature`）在无特殊说明的情况下不需要包含。
 
-`signature` 是一个 Base64 字符串，其中包含属性值（使用 UTF-8 编码）的数字签名（使用 SHA1withRSA 算法，见 [PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见 [签名密钥对](https://github.com/yushijinhun/authlib-injector/wiki/%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E5%AF%B9)。
+`signature` 是一个 Base64 字符串，其中包含属性值（使用 UTF-8 编码）的数字签名（使用 SHA1withRSA 算法，见 [PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见 [签名密钥对](https://github.com/yushijinhun/authlib-injector/wiki/签名密钥对)。
 
 角色属性中目前已知的键有 `textures`（并不一定会包含）。它对应的值是一个 Base64 字符串，内容为 JSON 字符串，包含角色的材质信息，格式如下：
 ```javascript
@@ -561,7 +561,7 @@ Mojang 之所以这么做，可能是为了防止用户多地同时登录（仅�
 **安全提示：** 该 API 也可用于判断密码的正确性，因此应受到和登录 API 一样的速率限制。
 
 ## 会话部分
-![Minecraft 玩家进服原理](https://raw.githubusercontent.com/wiki/yushijinhun/authlib-injector/mc%E5%85%A5%E6%9C%8D%E5%8E%9F%E7%90%86.svg?sanitize=true)
+![Minecraft 玩家进服原理](https://raw.githubusercontent.com/wiki/yushijinhun/authlib-injector/mc入服原理.svg?sanitize=true)
 
 > 上图使用 ProcessOn 绘制，导出为 SVG。[原始图像](https://www.processon.com/view/link/5a7fbbbae4b0812a0f102187)
 
@@ -726,7 +726,7 @@ Minecraft 对提供材质的域名有严格限制。仅当材质来自以 `.mine
 |feature.legacy\_skin\_api|_(advanced)_ 布尔值，指示验证服务器是否支持旧式皮肤 API，即 `GET /skins/MinecraftSkins/{username}.png`。<br>当未指定或值为 false 时，authlib-injector 会使用内建的 HTTP 服务器在本地处理对该 API 的请求；若值为 true，请求将由验证服务器处理。<br>详情见 [README § 参数] 中的 `-Dauthlibinjector.legacySkinPolyfill` 选项。|
 |feature.no\_mojang\_namespace|_(advanced)_ 布尔值，是否禁用 authlib-injector 的 Mojang 命名空间（@mojang 后缀）功能，默认为 false。<br>详情见 [README § 参数] 中的 `-Dauthlibinjector.mojangNamespace` 选项。|
 
-[README § 参数]: https://github.com/yushijinhun/authlib-injector#%E5%8F%82%E6%95%B0
+[README § 参数]: https://github.com/yushijinhun/authlib-injector#参数
 
 ### 响应示例
 ```javascript
