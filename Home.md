@@ -25,7 +25,7 @@
 ## 相关项目
  * [yggdrasil-mock](https://github.com/yushijinhun/yggdrasil-mock)
    * Yggdrasil 服务端规范的参考实现，以及 Yggdrasil API 的测试用例
-   * 基于此项目的 Yggdrasil 服务端演示站点：[example.yggdrasil.yushi.moe](https://github.com/yushijinhun/yggdrasil-mock/wiki/演示站点)
+   * 基于此项目的 Yggdrasil 服务端演示站点：[auth-demo.yushi.moe](https://github.com/yushijinhun/yggdrasil-mock/wiki/演示站点)
  * [BMCLAPI](https://bmclapidoc.bangbang93.com/#api-Mirrors-Mirrors_authlib_injector)
    * BMCLAPI 为 authlib-injector 下载提供了一个镜像
  * [Yggdrasil API for Blessing Skin](https://blessing.netlify.app/yggdrasil-api/)
