@@ -109,7 +109,7 @@
 	"id":"用户的 ID",
 	"properties":[ // 用户的属性（数组，每一元素为一个属性）
 		{ // 一项属性
-			"name":"属性的键",
+			"name":"属性的名称",
 			"value":"属性的值",
 		}
 		// ,...（可以有更多）
@@ -117,11 +117,11 @@
 }
 ```
 
-用户属性中目前已知的键如下（并不一定会包含）：
+用户属性中目前已知的项目如下：
 
-|键|对应的值|
+|名称|值|
 |--|--------|
-|preferredLanguage|用户的偏好语言，[Java Locale 格式](https://docs.oracle.com/javase/8/docs/api/java/util/Locale.html#toString--)(?)，例如 `en`、`zh_CN`|
+|preferredLanguage|**（可选）**用户的偏好语言，例如 `en`、`zh_CN`|
 
 ### 角色（Profile）
 > Mojang 当前不支持多角色，不保证多角色部分内容的正确性。
@@ -163,7 +163,7 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 	"name":"角色名称",
 	"properties":[ // 角色的属性（数组，每一元素为一个属性）（仅在特定情况下需要包含）
 		{ // 一项属性
-			"name":"属性的键",
+			"name":"属性的名称",
 			"value":"属性的值",
 			"signature":"属性值的数字签名（仅在特定情况下需要包含）"
 		}
@@ -174,9 +174,9 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 
 角色属性（`properties`）及数字签名（`signature`）在无特殊说明的情况下不需要包含。
 
-`signature` 是一个 Base64 字符串，其中包含属性值（使用 UTF-8 编码）的数字签名（使用 SHA1withRSA 算法，见 [PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见 [签名密钥对](签名密钥对)。
+`signature` 是一个 Base64 字符串，其中包含属性值（UTF-8 编码）的数字签名（使用 SHA1withRSA 算法，见 [PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见 [签名密钥对](签名密钥对)。
 
-角色属性中目前已知的键有 `textures`（并不一定会包含）。它对应的值是一个 Base64 字符串，内容为 JSON 字符串，包含角色的材质信息，格式如下：
+角色属性中目前已知的项目有 `textures`（可选）。它的值是一个 Base64 编码的 UTF-8 JSON 字符串，包含了角色的材质信息，其格式如下：
 ```javascript
 {
 	"timestamp":该属性值被生成时的时间戳（Java 时间戳格式，即自 1970-01-01 00:00:00 UTC 至今经过的毫秒数）,
@@ -186,7 +186,7 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 		"材质类型（如 SKIN）":{ // 若角色不具有该项材质，则不必包含
 			"url":"材质的 URL",
 			"metadata":{ // 材质的元数据，若没有则不必包含
-				"键":"值"
+				"名称":"值"
 				// ,...（可以有更多）
 			}
 		}
@@ -194,7 +194,7 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 	}
 }
 ```
-材质元数据中目前已知的键有 `model`，其对应该角色的材质模型，取值为 `default` 或 `slim`。
+材质元数据中目前已知的项目有 `model`，其对应该角色的材质模型，取值为 `default` 或 `slim`。
 
 #### 材质 URL 规范
 Minecraft 将材质 hash 作为材质的标识。每当客户端下载一个材质后，便会将其缓存在本地，以后若需要相同 hash 的材质，则会直接使用缓存。
