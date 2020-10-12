@@ -5,6 +5,7 @@
 
 - [概述](#%E6%A6%82%E8%BF%B0)
 - [基本约定](#%E5%9F%BA%E6%9C%AC%E7%BA%A6%E5%AE%9A)
+  - [字符编码](#%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81)
   - [请求与响应格式](#%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94%E6%A0%BC%E5%BC%8F)
   - [错误信息格式](#%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E6%A0%BC%E5%BC%8F)
   - [数据格式](#%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F)
@@ -16,7 +17,7 @@
         - [兼容离线验证](#%E5%85%BC%E5%AE%B9%E7%A6%BB%E7%BA%BF%E9%AA%8C%E8%AF%81)
       - [角色信息的序列化](#%E8%A7%92%E8%89%B2%E4%BF%A1%E6%81%AF%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96)
       - [`textures` 材质信息属性](#textures-%E6%9D%90%E8%B4%A8%E4%BF%A1%E6%81%AF%E5%B1%9E%E6%80%A7)
-        - [材质 URL 规范](#%E6%9D%90%E8%B4%A8-url-%E8%A7%84%E8%8C%83)
+      - [材质 URL 规范](#%E6%9D%90%E8%B4%A8-url-%E8%A7%84%E8%8C%83)
       - [用户上传材质的安全性](#%E7%94%A8%E6%88%B7%E4%B8%8A%E4%BC%A0%E6%9D%90%E8%B4%A8%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7)
     - [令牌（Token）](#%E4%BB%A4%E7%89%8Ctoken)
       - [令牌的状态](#%E4%BB%A4%E7%89%8C%E7%9A%84%E7%8A%B6%E6%80%81)
@@ -56,6 +57,9 @@
 但事实上只要客户端能够正确理解并处理服务端的响应，那么其行为是否与 Mojang 服务端的相同，也就无关紧要了。
 
 # 基本约定
+
+## 字符编码
+本文中字符编码一律使用 UTF-8。
 
 ## 请求与响应格式
 若无特殊说明，请求与响应均为 JSON 格式（如果有 body），`Content-Type` 均为 `application/json; charset=utf-8`。
@@ -175,15 +179,15 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 
 角色属性（`properties`）及数字签名（`signature`）在无特殊说明的情况下不需要包含。
 
-`signature` 是一个 Base64 字符串，其中包含属性值（UTF-8 编码）的数字签名（使用 SHA1withRSA 算法，见 [PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见 [签名密钥对](签名密钥对)。
+`signature` 是属性值的数字签名，使用 Base64 编码。签名算法为 SHA1withRSA，见 [PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)。关于签名密钥的详细介绍，见 [签名密钥对](签名密钥对)。
 
 角色属性中可以包含以下项目：
 |名称|值|
 |----|--|
-|textures|（可选）Base64 编码的 UTF-8 JSON 字符串，包含了角色的材质信息，详见 [§`textures` 材质信息属性](#textures-材质信息属性)。|
+|textures|（可选）Base64 编码的 JSON 字符串，包含了角色的材质信息，详见 [§`textures` 材质信息属性](#textures-材质信息属性)。|
 
 #### `textures` 材质信息属性
-以下为材质信息的格式，将这段 JSON 使用 UTF-8 进行 Base64 编码后，即为 `textures` 角色属性的值。
+以下为材质信息的格式，将这段 JSON 进行 Base64 编码后，即为 `textures` 角色属性的值。
 ```javascript
 {
 	"timestamp":该属性值被生成时的时间戳（Java 时间戳格式，即自 1970-01-01 00:00:00 UTC 至今经过的毫秒数）,
@@ -203,7 +207,7 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 ```
 材质元数据中目前已知的项目有 `model`，其对应该角色的材质模型，取值为 `default` 或 `slim`。
 
-##### 材质 URL 规范
+#### 材质 URL 规范
 Minecraft 将材质 hash 作为材质的标识。每当客户端下载一个材质后，便会将其缓存在本地，以后若需要相同 hash 的材质，则会直接使用缓存。
 而这个 hash 并不是由客户端计算的。Yggdrasil 服务端应先计算好材质 hash，将其作为材质 URL 的文件名，即从 URL 最后一个 `/`（不包括）开始一直到结尾的这一段子串。
 而客户端会直接将 URL 的文件名作为材质的 hash。
