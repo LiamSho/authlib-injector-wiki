@@ -15,7 +15,8 @@
       - [角色 UUID 的生成](#%E8%A7%92%E8%89%B2-uuid-%E7%9A%84%E7%94%9F%E6%88%90)
         - [兼容离线验证](#%E5%85%BC%E5%AE%B9%E7%A6%BB%E7%BA%BF%E9%AA%8C%E8%AF%81)
       - [角色信息的序列化](#%E8%A7%92%E8%89%B2%E4%BF%A1%E6%81%AF%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96)
-      - [材质 URL 规范](#%E6%9D%90%E8%B4%A8-url-%E8%A7%84%E8%8C%83)
+      - [`textures` 材质信息属性](#textures-%E6%9D%90%E8%B4%A8%E4%BF%A1%E6%81%AF%E5%B1%9E%E6%80%A7)
+        - [材质 URL 规范](#%E6%9D%90%E8%B4%A8-url-%E8%A7%84%E8%8C%83)
       - [用户上传材质的安全性](#%E7%94%A8%E6%88%B7%E4%B8%8A%E4%BC%A0%E6%9D%90%E8%B4%A8%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7)
     - [令牌（Token）](#%E4%BB%A4%E7%89%8Ctoken)
       - [令牌的状态](#%E4%BB%A4%E7%89%8C%E7%9A%84%E7%8A%B6%E6%80%81)
@@ -176,7 +177,13 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 
 `signature` 是一个 Base64 字符串，其中包含属性值（UTF-8 编码）的数字签名（使用 SHA1withRSA 算法，见 [PKCS #1](https://www.rfc-editor.org/rfc/rfc2437.txt)）。关于签名密钥的详细介绍，见 [签名密钥对](签名密钥对)。
 
-角色属性中目前已知的项目有 `textures`（可选）。它的值是一个 Base64 编码的 UTF-8 JSON 字符串，包含了角色的材质信息，其格式如下：
+角色属性中可以包含以下项目：
+|名称|值|
+|----|--|
+|textures|（可选）Base64 编码的 UTF-8 JSON 字符串，包含了角色的材质信息，详见 [§`textures` 材质信息属性](#textures-材质信息属性)。|
+
+#### `textures` 材质信息属性
+以下为材质信息的格式，将这段 JSON 使用 UTF-8 进行 Base64 编码后，即为 `textures` 角色属性的值。
 ```javascript
 {
 	"timestamp":该属性值被生成时的时间戳（Java 时间戳格式，即自 1970-01-01 00:00:00 UTC 至今经过的毫秒数）,
@@ -196,7 +203,7 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 ```
 材质元数据中目前已知的项目有 `model`，其对应该角色的材质模型，取值为 `default` 或 `slim`。
 
-#### 材质 URL 规范
+##### 材质 URL 规范
 Minecraft 将材质 hash 作为材质的标识。每当客户端下载一个材质后，便会将其缓存在本地，以后若需要相同 hash 的材质，则会直接使用缓存。
 而这个 hash 并不是由客户端计算的。Yggdrasil 服务端应先计算好材质 hash，将其作为材质 URL 的文件名，即从 URL 最后一个 `/`（不包括）开始一直到结尾的这一段子串。
 而客户端会直接将 URL 的文件名作为材质的 hash。
