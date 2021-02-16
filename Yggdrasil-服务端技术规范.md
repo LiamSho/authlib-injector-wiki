@@ -17,6 +17,7 @@
         - [兼容离线验证](#%E5%85%BC%E5%AE%B9%E7%A6%BB%E7%BA%BF%E9%AA%8C%E8%AF%81)
       - [角色信息的序列化](#%E8%A7%92%E8%89%B2%E4%BF%A1%E6%81%AF%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96)
       - [`textures` 材质信息属性](#textures-%E6%9D%90%E8%B4%A8%E4%BF%A1%E6%81%AF%E5%B1%9E%E6%80%A7)
+      - [`uploadableTextures` 可上传的材质类型](#uploadabletextures-%E5%8F%AF%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%9D%90%E8%B4%A8%E7%B1%BB%E5%9E%8B)
       - [材质 URL 规范](#%E6%9D%90%E8%B4%A8-url-%E8%A7%84%E8%8C%83)
       - [用户上传材质的安全性](#%E7%94%A8%E6%88%B7%E4%B8%8A%E4%BC%A0%E6%9D%90%E8%B4%A8%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7)
     - [令牌（Token）](#%E4%BB%A4%E7%89%8Ctoken)
@@ -36,6 +37,9 @@
   - [角色部分](#%E8%A7%92%E8%89%B2%E9%83%A8%E5%88%86)
     - [查询角色属性](#%E6%9F%A5%E8%AF%A2%E8%A7%92%E8%89%B2%E5%B1%9E%E6%80%A7)
     - [按名称批量查询角色](#%E6%8C%89%E5%90%8D%E7%A7%B0%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2%E8%A7%92%E8%89%B2)
+  - [材质上传](#%E6%9D%90%E8%B4%A8%E4%B8%8A%E4%BC%A0)
+    - [PUT 上传材质](#put-%E4%B8%8A%E4%BC%A0%E6%9D%90%E8%B4%A8)
+    - [DELETE 清除材质](#delete-%E6%B8%85%E9%99%A4%E6%9D%90%E8%B4%A8)
 - [扩展 API](#%E6%89%A9%E5%B1%95-api)
   - [API 元数据获取](#api-%E5%85%83%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96)
     - [材质域名白名单](#%E6%9D%90%E8%B4%A8%E5%9F%9F%E5%90%8D%E7%99%BD%E5%90%8D%E5%8D%95)
@@ -186,6 +190,7 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 |名称|值|
 |----|--|
 |textures|（可选）Base64 编码的 JSON 字符串，包含了角色的材质信息，详见 [§`textures` 材质信息属性](#textures-材质信息属性)。|
+|uploadableTextures|（可选）该角色可以上传的材质类型，为 authlib-injector 自行规定的属性，详见 [§`uploadableTextures` 可上传的材质类型](#uploadableTextures-可上传的材质类型)|
 
 #### `textures` 材质信息属性
 以下为材质信息的格式，将这段 JSON 进行 Base64 编码后，即为 `textures` 角色属性的值。
@@ -207,6 +212,19 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 }
 ```
 材质元数据中目前已知的项目有 `model`，其对应该角色的材质模型，取值为 `default` 或 `slim`。
+
+#### `uploadableTextures` 可上传的材质类型
+> **注意：**这一角色属性是由 authlib-injector 文档规定的，Mojang 返回的角色属性是不包含这一项的。Mojang 仅允许用户上传皮肤，不允许上传披风。
+
+考虑到并非所有验证服务器都允许用户上传皮肤和披风，因此 authlib-injector 规定了 `uploadableTextures` 角色属性，其表示角色可以上传的材质类型。
+
+该属性的值是一个逗号分隔的列表，包含了可以上传的材质类型。材质类型目前有 `skin` 和 `cape` 两种。
+
+例如，`uploadableTextures` 属性的值若为 `skin`，则表示可以为该角色上传皮肤，但不能上传披风；值若为 `skin,cape`，则既可以上传皮肤，又可以上传披风。
+
+如果不存在 `uploadableTextures` 属性，则不能为该角色上传任何类型的材质。
+
+关于材质上传接口的介绍，请参考 [§材质上传](#材质上传)。
 
 #### 材质 URL 规范
 Minecraft 将材质 hash 作为材质的标识。每当客户端下载一个材质后，便会将其缓存在本地，以后若需要相同 hash 的材质，则会直接使用缓存。
@@ -683,6 +701,41 @@ Mojang 之所以这么做，可能是为了防止用户多地同时登录（仅�
 ```
 
 **安全提示：** 为防止 CC 攻击，需要为单次查询的角色数目设置最大值，该值至少为 2。
+
+## 材质上传
+```
+PUT /api/user/profile/{uuid}/{textureType}
+DELETE /api/user/profile/{uuid}/{textureType}
+```
+
+设置或清除指定角色的材质。
+
+> 并非所有角色都可以上传皮肤和披风。要获取当前角色能够上传的材质类型，参见 [§`uploadableTextures` 可上传的材质类型](#uploadableTextures-可上传的材质类型)。
+
+请求参数：
+
+|参数|值|
+|----|--|
+|uuid|角色的 UUID（无符号）|
+|textureType|材质类型，可以为 `skin`（皮肤）或 `cape`（披风）|
+
+请求需要带上 HTTP 头部 `Authorization: Bearer {accessToken}` 进行认证。若未包含 Authorization 头或 accessToken 无效，则返回 `401 Unauthorized`。
+
+如果操作成功，则返回 `204 No Content`。
+
+下面分别介绍 PUT 和 DELETE 这两个 HTTP 方法的用法：
+
+### PUT 上传材质
+请求的 `Content-Type` 为 `multipart/form-data`，请求载荷由以下部分组成：
+|名称（name）|内容|
+|-----------|----|
+|model      |**（仅用于皮肤）** 皮肤的材质模型，可以为 `slim`（细胳膊皮肤）或空字符串（普通皮肤）。|
+|file       |材质图像，`Content-Type` 须为 `image/png`。<br>建议客户端设置 `Content-Disposition` 中的 `filename` 参数为材质图像的文件名，这可以被验证服务器用作材质的备注。|
+
+如果操作成功，则返回 `204 No Content`。
+
+### DELETE 清除材质
+清除材质后，该类型的材质将恢复为默认。
 
 # 扩展 API
 以下 API 是为了方便 authlib-injector 进行自动配置而设计的。
