@@ -214,7 +214,7 @@ UUID.nameUUIDFromBytes(("OfflinePlayer:" + characterName).getBytes(StandardChars
 材质元数据中目前已知的项目有 `model`，其对应该角色的材质模型，取值为 `default` 或 `slim`。
 
 #### `uploadableTextures` 可上传的材质类型
-> **注意：**这一角色属性是由 authlib-injector 文档规定的，Mojang 返回的角色属性是不包含这一项的。Mojang 仅允许用户上传皮肤，不允许上传披风。
+> **注意：** 这一角色属性是由 authlib-injector 文档规定的，Mojang 返回的角色属性是不包含这一项的。Mojang 仅允许用户上传皮肤，不允许上传披风。
 
 考虑到并非所有验证服务器都允许用户上传皮肤和披风，因此 authlib-injector 规定了 `uploadableTextures` 角色属性，其表示角色可以上传的材质类型。
 
