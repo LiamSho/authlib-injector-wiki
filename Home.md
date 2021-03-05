@@ -1,10 +1,10 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 目录
-=================
 
 - [简介](#%E7%AE%80%E4%BB%8B)
 - [相关项目](#%E7%9B%B8%E5%85%B3%E9%A1%B9%E7%9B%AE)
+- [推荐的公共验证服务器](#%E6%8E%A8%E8%8D%90%E7%9A%84%E5%85%AC%E5%85%B1%E9%AA%8C%E8%AF%81%E6%9C%8D%E5%8A%A1%E5%99%A8)
 - [捐助](#%E6%8D%90%E5%8A%A9)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -36,6 +36,10 @@
    * BakaXL 3.0 支持 authlib-injector
  * [LaunchHelper](https://github.com/Codex-in-somnio/LaunchHelper)
    * 想在 Multicraft 面板服上使用 authlib-injector，可以尝试此项目
+
+## 推荐的公共验证服务器
+ * [LittleSkin](https://littlesk.in/)
+ * [Ely.by](https://ely.by/)
 
 ## 捐助
 BMCLAPI 为 authlib-injector 提供了下载镜像站。如果您想要支持 authlib-injector 的开发，您可以[捐助 BMCLAPI](https://bmclapidoc.bangbang93.com/)。
