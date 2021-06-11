@@ -795,8 +795,10 @@ Minecraft 仅会从白名单中的域名下载材质。如果材质 URL 的域�
 |feature.non\_email\_login|布尔值，指示验证服务器是否支持使用邮箱之外的凭证登录（如角色名登录），默认为 false。<br>详情见 [§使用角色名称登录](#使用角色名称登录)。|
 |feature.legacy\_skin\_api|_(advanced)_ 布尔值，指示验证服务器是否支持旧式皮肤 API，即 `GET /skins/MinecraftSkins/{username}.png`。<br>当未指定或值为 false 时，authlib-injector 会使用内建的 HTTP 服务器在本地处理对该 API 的请求；若值为 true，请求将由验证服务器处理。<br>详情见 [README § 参数] 中的 `-Dauthlibinjector.legacySkinPolyfill` 选项。|
 |feature.no\_mojang\_namespace|_(advanced)_ 布尔值，是否禁用 authlib-injector 的 Mojang 命名空间（@mojang 后缀）功能，默认为 false。<br>详情见 [README § 参数] 中的 `-Dauthlibinjector.mojangNamespace` 选项。|
+|feature.privileges\_api|_(advanced)_ 布尔值，指示验证服务器是否支持 `GET /minecraftservices/privileges` API。<br>当未指定或值为 false 时，authlib-injector 将在本地处理对该 API 的请求；若值为 true，请求将由验证服务器处理。<br>详情见 [#124]。|
 
 [README § 参数]: https://github.com/yushijinhun/authlib-injector#参数
+[#124]: https://github.com/yushijinhun/authlib-injector/pull/124
 
 ### 响应示例
 ```javascript
