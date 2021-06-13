@@ -82,3 +82,4 @@ java -javaagent:authlib-injector.jar=https://example.yggdrasil.yushi.moe -jar mi
 |ModLauncher|1.1.24, 1.1.25|[#38](https://github.com/yushijinhun/authlib-injector/pull/38)|
 |Arclight|<=1.1.30|[#80](https://github.com/yushijinhun/authlib-injector/issues/80)|
 |Geyser (plugin)|<=1.1.31|[#83](https://github.com/yushijinhun/authlib-injector/issues/83)|
+|BungeeCord|<=1.1.36|[#108](https://github.com/yushijinhun/authlib-injector/issues/108)|
